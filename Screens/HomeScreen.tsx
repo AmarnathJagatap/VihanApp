@@ -135,7 +135,7 @@ export default function HomeScreen({navigation}){
       component={AppScreen}
       options={{headerShown: false}}
       />     
-      
+     
 
     </Stack.Navigator>
   )

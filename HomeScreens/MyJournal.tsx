@@ -2,10 +2,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, Button } from 'react-native';
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
+import MainComponent from './MyJournal/MainComponent';
+import TopTabs from './MyJournal/TopTabs';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const Myhome = () => {
+const MyJournal = () => {
   return (
     <View>
       
@@ -32,34 +34,8 @@ const Myhome = () => {
       </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
-
-    <ScrollView>
-        <View>
-          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Select Date</Text>
-          <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-             <TouchableOpacity style={styles.calendarcontainer}>
-               <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.40)",fontFamily:'Poppins-Regular',}}>Calender</Text>                                
-             </TouchableOpacity>
-             <TouchableOpacity>
-             <FontAwesome name="filter" size={35} color={'rgba(0, 0, 0, 0.40)'} style={{justifyContent:'center',alignItems:'center',marginVertical:8,marginRight:8}}/>
-             </TouchableOpacity>
-          </View>               
-        </View>
-
-        <View>
-          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Recents</Text>
-          <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-            <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30}}>              
-            </LinearGradient>
-            <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.40)",fontFamily:'Poppins-Regular',marginVertical:5}}>Calender</Text>        
-            <TouchableOpacity>
-              <FontAwesome name="chevron-right" size={20} color={'rgba(0, 0, 0, 0.60)'} style={{justifyContent:'center',alignItems:'center',marginVertical:8,marginRight:8}}/>
-            </TouchableOpacity>                        
-            
-          </View>                     
-        </View>
-    </ScrollView>
-    </View>
+    <MainComponent/>
+</View>
   );
 };
 
@@ -185,4 +161,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Myhome;
+export default MyJournal;
