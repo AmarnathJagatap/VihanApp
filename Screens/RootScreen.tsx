@@ -5,10 +5,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 
 import { Provider } from 'react-redux';
-import {store } from './screens/store';
+import {store } from '../Store/Store';
 import { AuthContext } from '../Context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors  from '../Constants/Colors';
+import HomeScreen from './HomeScreen';
+import SignIn from './Login';
+import RegisterScreen from './Registration';
 
 
 const Stack = createStackNavigator();
@@ -38,7 +41,7 @@ const Authandler=()=> {
     return(
       <View style={styles.container}>
          <View>
-            <Image source={require('./assets/icon.png')} style={{alignSelf:'center',resizeMode:'center',marginHorizontal:10}}/>
+            <Image source={require('../assets/icon.png')} style={{alignSelf:'center',resizeMode:'center',marginHorizontal:10}}/>
         </View>  
         <ActivityIndicator
           color={Colors.light.tabIconSelected}
@@ -83,11 +86,6 @@ const Authandler=()=> {
                 fontWeight: 'bold',
               },
             }}
-          />
-          <Stack.Screen
-            name="Onboarding"
-            component={Onboarding}
-            options={{headerShown: false}}
           />
           </>
         )

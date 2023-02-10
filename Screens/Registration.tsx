@@ -12,7 +12,7 @@ import {
 import { TextInput } from 'react-native-paper';
 import { storeToken } from '../Services/AsyncStorageService';
 import { AuthContext } from '../Context/AuthContext';
-import { Apilink } from '../constants/Apilink';
+import { Apilink } from '../Constants/Apilink';
 import SelectDropdown from 'react-native-select-dropdown';
 import Lottie from 'lottie-react-native';
 import  Colors  from '../Constants/Colors';
@@ -112,7 +112,6 @@ const RegisterScreen = ({navigation}) => {
     if(data.token){
       setUserToken("Token "+data.token);
       storeToken("Token "+data.token)
-      navigation.navigate('Onboarding')
       clearTextInput()
     }
     else{
@@ -173,7 +172,7 @@ const RegisterScreen = ({navigation}) => {
           alignContent: 'center',
         }}>
        <View>
-            <Image source={require('../assets/logo.png')} style={{alignSelf:'center',resizeMode:'center',marginHorizontal:10}}/>
+            <Image source={require('../assets/icon.png')} style={{alignSelf:'center',width:200,height:200,resizeMode:'center',marginHorizontal:10}}/>
         </View>  
         <KeyboardAvoidingView enabled>
             <TextInput

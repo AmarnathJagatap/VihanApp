@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 5,
     color:"#FFF",
-    fontFamily:'Poppins-Bold'
+
   },
   icons: {
     flexDirection: 'row',
@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize:15,
     alignSelf:'center',
-    fontFamily:'Poppins-Regular'
   },
   cardcontainer:{
     backgroundColor: '#fff',
@@ -145,12 +144,10 @@ const styles = StyleSheet.create({
   meetingrowname:{
     fontSize: 15,
     color:"#000",
-    fontFamily:'Poppins-Regular',
   },
   meetingrowtime:{
     fontSize: 11,
     color:"#000",
-    fontFamily:'Poppins-Regular'
   },
   cardImagecontainer:{
     backgroundColor: '#fff',

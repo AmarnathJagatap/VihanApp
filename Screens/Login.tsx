@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Dimensions,TouchableOpacity,Image, ToastAndroid, KeyboardAvoidingView} from 'react-native';
 import { storeToken } from '../Services/AsyncStorageService';
 import { AuthContext } from '../Context/AuthContext';
-import { Apilink } from '../constants/Apilink';
+import { Apilink } from '../Constants/Apilink';
 import { TextInput } from 'react-native-paper';
 import Lottie from 'lottie-react-native';
-import  Colors  from '../constants/Colors';
+import  Colors  from '../Constants/Colors';
 
 
 const { width, height } = Dimensions.get('window');
@@ -113,7 +113,7 @@ const SignIn = ({navigation}) => {
         <>{
             animating?<AnimatingScreen/>:<KeyboardAvoidingView style={styles.container}>  
             <View>
-                <Image source={require('../assets/logo.png')} style={{alignSelf:'center',resizeMode:'center',marginHorizontal:10}}/>
+                <Text style={{fontSize:40,textAlign:'center'}}>Vihaan</Text>
             </View>      
                         <TextInput 
                         mode='outlined'

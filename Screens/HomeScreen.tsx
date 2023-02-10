@@ -12,6 +12,10 @@ import Community from '../HomeScreens/Community/Community';
 import Colors from '../Constants/Colors';
 import { AuthContext } from '../Context/AuthContext';
 import MyJourney from '../HomeScreens/MyHome/MyJourney';
+import StressScore from '../QuizApp/Stressscore';
+import GroupDetails from '../ScheduleGroup/GroupDetails';
+import GroupData from '../ScheduleGroup/GroupData';
+import CreateGroup from '../ScheduleGroup/CreateGroup';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -104,7 +108,7 @@ const AppScreen = ({navigation}) => {
       />
       <Tab.Screen
         name="Account"
-        component={Community}
+        component={GroupData}
         options={{
             tabBarShowLabel:false,
           tabBarIcon: ({ color, size }) => (
@@ -142,7 +146,29 @@ export default function HomeScreen({navigation}){
       name="MyJourney"
       component={MyJourney}
       options={{headerShown: false}}
-      />    
+      />   
+      <Stack.Screen
+      name="Quiz"
+      component={StressScore}
+      options={{headerShown: false}}
+      />  
+       <Stack.Screen
+        name="GroupData"
+        component={GroupData}
+        options={{headerShown: false}}
+     
+      /> 
+     <Stack.Screen
+        name="GroupDetails"
+        component={GroupDetails}
+        options={{headerShown: false}}
+ 
+      />  
+      <Stack.Screen
+        name="CreateGroup"
+        component={CreateGroup}
+        options={{headerShown: false}}   
+      />  
      
 
     </Stack.Navigator>

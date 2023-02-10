@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import {setupListeners} from '@reduxjs/toolkit/query'
-import { UserauthApi } from '../services/UserauthApi'
+import { UserauthApi } from '../Services/UserAuthApi'
 export const store = configureStore({
     reducer: {
         [UserauthApi.reducerPath]: UserauthApi.reducer,

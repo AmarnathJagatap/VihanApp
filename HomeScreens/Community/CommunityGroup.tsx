@@ -10,7 +10,7 @@ const CommunityGroup = () => {
     <ScrollView>
 
     <View>
-      <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Groups</Text>
+      <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>asda</Text>
       <View style={{width:windowWidth-20,flexDirection:'row',justifyContent:'space-evenly',marginVertical:10}}>
         <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30,marginHorizontal:20}}>              
         </LinearGradient>
