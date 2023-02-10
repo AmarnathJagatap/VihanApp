@@ -6,8 +6,9 @@ const AuthProvider = ({children}) => {
     const [accessToken, setAccessToken] = useState(''); 
     const [refreshToken,setRefreshToken]= useState('');
     const [userData, setUserData] = useState({});
+    const [homeScreenItem, setHomeScreenItem] = useState('Home');
   return (
-    <AuthContext.Provider value={{isLoggedIn,setIsLoggedIn,accessToken,setAccessToken,refreshToken,setRefreshToken,userData,setUserData}}>
+    <AuthContext.Provider value={{isLoggedIn,setIsLoggedIn,accessToken,setAccessToken,refreshToken,setRefreshToken,userData,setUserData,homeScreenItem,setHomeScreenItem}}>
         {children}
     </AuthContext.Provider>   
   )

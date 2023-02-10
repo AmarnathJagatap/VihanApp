@@ -1,43 +1,60 @@
-import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions } from 'react-native'
-import React from 'react'
-import { LinearGradient } from 'expo-linear-gradient'
+import { ScrollView, StyleSheet, Text, View,Image, ImageBackground, Dimensions, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
+import { AuthContext } from '../../Context/AuthContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const MyTask = () => {
+const MainHome = () => {
+  const {setHomeScreenItem} = useContext(AuthContext)
   return (
-    <View>
+    <ScrollView> 
         <View>
-          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>These are your task before next session.</Text>
-          <LinearGradient
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
-                <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Fake Confidence</Text>
-              </View>                
-          </LinearGradient>
-          <LinearGradient
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
-                <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Rumination</Text>
-              </View>                
-          </LinearGradient>
-          <LinearGradient
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
-                <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Make new Friends</Text>
-              </View>                
-          </LinearGradient>  
+          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Depression Program</Text>   
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>   
+             
+          <ImageBackground borderRadius={30} source={require('../../assets/selfcare1.png')} style={{height:windowHeight/3.5,width:windowWidth/1.2}}>
+            <View style={{borderRadius:40,flexDirection:'column',flex:1,justifyContent:'space-between'}}>
+                <Text style={{marginHorizontal:30,marginVertical:10,fontSize:18,color:'#ffffff'}}>Mindful Audio</Text>
+                <Text style={{marginHorizontal:30,marginVertical:10,fontSize:18,color:'#ffffff'}}>Day 1</Text>
+            </View>
+          </ImageBackground>
+          <Image source={require('../../assets/selfcare2.png')} style={{borderRadius:30,height:windowHeight/4}}/>
+          <Image source={require('../../assets/selfcare2.png')} style={{borderRadius:30,height:windowHeight/4}}/>
+         
+          </ScrollView>
         </View>
 
-    </View>
+        <View>
+          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Explore</Text>
+          <ImageBackground borderRadius={30} source={require('../../assets/Explore.png')} style={{height:windowHeight/4,marginHorizontal:20,justifyContent:'space-evenly'}}>
+            <View style={{marginVertical:20,flex:1,alignItems:'flex-start',marginHorizontal:20}}>
+                <Text style={{fontSize:20,color:'#ffffff',}}>
+                    Take this Program
+                </Text>
+                <View style={{flexDirection:'row'}}>
+                <Text style={{fontSize:20,color:'#ffffff',marginHorizontal:5}}>
+                    with 
+                </Text>
+                <Text style={{fontSize:20,color:'#ff0000',}}>
+                    Subscription
+                </Text>
+                </View>
+            </View>    
+            <View style={{marginBottom:30,marginHorizontal:20,borderColor:'#ffffff',borderWidth:2,width:windowWidth/3.4,height:windowHeight/18,borderRadius:20,alignItems:'center'}}>
+                <Text style={{fontSize:14,color:'#ffffff'}}>Explore Now</Text>
+            </View>       
+          </ImageBackground>     
+        </View>
+
+       
+
+    </ScrollView>
   )
 }
 
-export default MyTask
+export default MainHome
 
 const styles = StyleSheet.create({
     container: {
@@ -111,10 +128,9 @@ const styles = StyleSheet.create({
     },
     cardcontainer:{
       backgroundColor: '#fff',
-      height:windowHeight/12,
-      marginVertical:5,
+      height:windowHeight/3.8,
       marginHorizontal:10,
-      borderRadius: 10,
+      borderRadius: 30,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 6 },
       shadowOpacity: 0.9,

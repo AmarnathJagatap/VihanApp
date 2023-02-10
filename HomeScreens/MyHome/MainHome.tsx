@@ -1,21 +1,23 @@
 import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions } from 'react-native'
-import React from 'react'
-import { LinearGradient } from 'expo-linear-gradient'
+import React, { useContext } from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
+import { AuthContext } from '../../Context/AuthContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const MainHome = () => {
+  const {setHomeScreenItem} = useContext(AuthContext)
   return (
     <ScrollView>
         <View>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Upcoming Events</Text>
           <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-                <Image source={require('../assets/cardImage.png')} style={{borderRadius:30,width:windowWidth-20,height:windowHeight/5.8}}/>
+                <Image source={require('../../assets/cardImage.png')} style={{borderRadius:30,width:windowWidth-20,height:windowHeight/5.8}}/>
                 <View style={styles.meetingrow}>
                     <View style={styles.propicrow}>
-                        <Image source={require('../assets/propic2.jpg')} style={styles.profilePicmeet} />
+                        <Image source={require('../../assets/propic2.jpg')} style={styles.profilePicmeet} />
                         <View>
                           <Text style={styles.meetingrowname}>Merlin</Text>
                           <Text style={styles.meetingrowtime}>30th Friday</Text>
@@ -39,15 +41,15 @@ const MainHome = () => {
           <View style={{flexDirection:'row'}}>
               <LinearGradient
                 colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
-                    <Image source={require('../assets/pastsession1.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
-                    <TouchableOpacity>
+                    <Image source={require('../../assets/pastsession1.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+                    <TouchableOpacity onPress={()=>{setHomeScreenItem('TASK')}}>
                     <Text style={{ fontSize: 14, color:"#000", fontFamily:'Poppins-Regular',alignSelf:'center',marginVertical:5}}>My Task</Text>    
                     </TouchableOpacity> 
               </LinearGradient>   
               <LinearGradient
                 colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
-                    <Image source={require('../assets/pastsession2.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
-                    <TouchableOpacity>
+                    <Image source={require('../../assets/pastsession2.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+                    <TouchableOpacity onPress={()=>{setHomeScreenItem('Reflect Back')}}>
                     <Text style={{ fontSize: 14, color:"#000", fontFamily:'Poppins-Regular',alignSelf:'center',marginVertical:5}}>Reflection Back</Text>    
                     </TouchableOpacity>                                
                                             

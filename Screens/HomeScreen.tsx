@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {View, SafeAreaView,TouchableOpacity, Image, Dimensions} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {MaterialCommunityIcons,Ionicons} from '@expo/vector-icons'
@@ -7,9 +7,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Myhome from '../HomeScreens/Myhome';
 import MyJournal from '../HomeScreens/MyJournal';
-import TrackTrigger from '../HomeScreens/TrackTrigger';
+import TrackTrigger from '../HomeScreens/Triggers/TrackTrigger';
 import Community from '../HomeScreens/Community';
 import Colors from '../Constants/Colors';
+import { AuthContext } from '../Context/AuthContext';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -42,6 +43,7 @@ const CustomBarButton = ({children, onPress})=>(
 
 
 const AppScreen = ({navigation}) => {
+  const {homeScreenItem,setHomeScreenItem} = useContext(AuthContext)
  
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -62,10 +64,10 @@ const AppScreen = ({navigation}) => {
         options={{
           tabBarShowLabel:false,
           tabBarIcon: ({ color, size }) => (            
-                          <MaterialCommunityIcons name="compass" color={color} size={27}/>
+            <MaterialCommunityIcons onPress={()=>{setHomeScreenItem("Home")}} name="compass" color={color} size={27}/>
           ),
           tabBarButton:(props)=>(
-            <CustomBarButton {...props}/>            
+            <CustomBarButton onPress={()=>{setHomeScreenItem("Home")}} {...props}/>            
           ), 
           headerShown:false          
         }}
@@ -75,8 +77,7 @@ const AppScreen = ({navigation}) => {
         component={MyJournal}
         options={{
             tabBarShowLabel:false,
-          tabBarIcon: ({ color, size }) => (
-            
+          tabBarIcon: ({ color, size }) => (            
             <Image source={require('../assets/classroom.png')} style={{width:27,height:27,tintColor:color}}/>
           ),
           tabBarButton:(props)=>(

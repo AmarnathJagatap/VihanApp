@@ -1,51 +1,29 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useContext } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import { Entypo } from '@expo/vector-icons'; 
-import MyTask from './MyHome/MyTask';
-import Reflecback from './MyHome/ReflectBack';
-import MainHome from './MyHome/MainHome';
-import { AuthContext } from '../Context/AuthContext';
-import MySelfCare from './MyHome/MySelfCare';
-import MyJourney from './MyHome/MyJourney';
+import React, { useEffect } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, Button } from 'react-native';
+import { Entypo,FontAwesome } from '@expo/vector-icons'; 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const Myhome = () => {
-  const [Item, setItem] = React.useState('main');
-  const {homeScreenItem,setHomeScreenItem} = useContext(AuthContext)
+const MoodTracker = () => {
   return (
+    <ScrollView>
     <View>
-    <LinearGradient
-        // Button Linear Gradient
-        colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
-      <View style={styles.header}>
-          <View style={styles.propicrow}>
-            <TouchableOpacity onPress={()=>setHomeScreenItem("My Journey")}>
-          <Image source={require('../assets/propic.jpg')} style={styles.profilePic} />
-          </TouchableOpacity>
-          <Text style={styles.name}>Hi Dhruv</Text>
-          </View>
-          <View style={styles.icons}>
-            <Image source={require('../assets/brainstromskill.png')} style={styles.icon} />
-            <Image source={require('../assets/sleep.png')} style={styles.icon} />
-          </View>
-      </View>
-      <TouchableOpacity onPress={()=>{homeScreenItem==="Home"?setHomeScreenItem("My Self Care"):setHomeScreenItem(homeScreenItem)}}>
-      <LinearGradient
-        // Button Linear Gradient
-        colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
-                  <Text style={styles.buttonText}>{homeScreenItem==="Home"?"My Self Care":homeScreenItem}</Text>
-                  {homeScreenItem==="Home"?<Entypo name="chevron-right" size={24} color="black" />:<></>}
-      </LinearGradient>
-      </TouchableOpacity>
-    </LinearGradient>
-    {homeScreenItem==="Home"?<MainHome/>:<></>}
-    {homeScreenItem==="TASK"?<MyTask/>:<></>}
-    {homeScreenItem==="Reflect Back"?<Reflecback/>:<></>}
-    {homeScreenItem==="My Self Care"?<MySelfCare/>:<></>}
-    {homeScreenItem==="My Journey"?<MyJourney/>:<></>}
+      <Text style={{marginHorizontal:30,textAlign:'center',marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>How are you?</Text>               
     </View>
+
+    <View>
+      <Image source={require('../../assets/emojis.png')} style={{width:windowWidth-20,marginHorizontal:10,height:windowHeight/15}}/>
+    </View>
+
+    <TouchableOpacity>
+              <LinearGradient
+                    colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{width:windowWidth-30,height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
+                      <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Check History</Text>
+              </LinearGradient>
+          </TouchableOpacity> 
+    
+</ScrollView>
   );
 };
 
@@ -119,11 +97,14 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     fontFamily:'Poppins-Regular'
   },
-  cardcontainer:{
-    backgroundColor: '#fff',
-    height:windowHeight/3.8,
-    marginHorizontal:10,
-    borderRadius: 30,
+  calendarcontainer:{
+    backgroundColor: '#D9D9D9',
+    height:windowHeight/14,
+    width:windowWidth/1.3,
+    justifyContent:'center',
+    padding:15,
+    marginHorizontal:15,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.9,
@@ -168,4 +149,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Myhome;
+export default MoodTracker;
