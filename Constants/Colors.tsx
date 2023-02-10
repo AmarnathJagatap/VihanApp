@@ -9,6 +9,11 @@ export default{
    ButtonBackGroun: 'rgba(134, 134, 142, 0.7)',
    ActiveIcon :'rgba(0,0,0)',
    InActiveIcon: '#0000004d',
-
-
+   light: {
+      white:'#fff',
+      black:'#000',
+      text: '#000',
+      background: '#D4F1F4',
+      tabIconSelected: '#0D98BA',
+    }
 }

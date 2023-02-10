@@ -1,0 +1,1 @@
+export const Apilink = `https://vihaniisc.pythonanywhere.com/`

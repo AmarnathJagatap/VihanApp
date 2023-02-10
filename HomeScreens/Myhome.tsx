@@ -11,7 +11,7 @@ import MyJourney from './MyHome/MyJourney';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const Myhome = () => {
+const Myhome = ({navigation}) => {
   const [Item, setItem] = React.useState('main');
   const {homeScreenItem,setHomeScreenItem} = useContext(AuthContext)
   return (
@@ -21,7 +21,7 @@ const Myhome = () => {
         colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
       <View style={styles.header}>
           <View style={styles.propicrow}>
-            <TouchableOpacity onPress={()=>setHomeScreenItem("My Journey")}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('MyJourney')}}>
           <Image source={require('../assets/propic.jpg')} style={styles.profilePic} />
           </TouchableOpacity>
           <Text style={styles.name}>Hi Dhruv</Text>
@@ -44,7 +44,6 @@ const Myhome = () => {
     {homeScreenItem==="TASK"?<MyTask/>:<></>}
     {homeScreenItem==="Reflect Back"?<Reflecback/>:<></>}
     {homeScreenItem==="My Self Care"?<MySelfCare/>:<></>}
-    {homeScreenItem==="My Journey"?<MyJourney/>:<></>}
     </View>
   );
 };

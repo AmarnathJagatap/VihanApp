@@ -1,47 +1,38 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, Button } from 'react-native';
-import Slider from '@react-native-community/slider';
+import CommunityGroup from './CommunityGroup';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const MoodTracker = () => {
-  const [value,setvalue] = useState(0);
+const MyJournal = () => {
   return (
-    <ScrollView>
     <View>
-      <Text style={{marginHorizontal:30,textAlign:'center',marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>How are you?</Text>               
-    </View>
-
-    <View>
-      <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-      <Image source={require('../../assets/very-happy.png')} style={{width:value<1.5 && value>0?60:40,marginHorizontal:10,height:value<1.5 && value>0?60:40}}/>
-      <Image source={require('../../assets/happy.png')} style={{width:value<4 && value>1.5?60:40,marginHorizontal:10,height:value<4 && value>1.5?60:40}}/>
-      <Image source={require('../../assets/emoji.png')} style={{width:value<6 && value>4?60:40,marginHorizontal:10,height:value<6 && value>4?60:40}}/>
-      <Image source={require('../../assets/sad.png')} style={{width:value<8 && value>6?60:40,marginHorizontal:10,height:value<8 && value>6?60:40}}/>
-      <Image source={require('../../assets/angry.png')} style={{width:value<10 && value>8?60:40,marginHorizontal:10,height:value<10 && value>8?60:40}}/>
-      </View>
-
-      <Slider
-        style={{width: windowWidth, height: 50}}
-        onValueChange={(e)=>setvalue(e)}
-        minimumValue={0}
-        maximumValue={10}
-        minimumTrackTintColor="#FFFFFF"
-        maximumTrackTintColor="#000000"
-        thumbTintColor="gray"
-      />
-
-    </View>
-
-    <TouchableOpacity>
-              <LinearGradient
-                    colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{width:windowWidth-30,height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
-                      <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Check History</Text>
-              </LinearGradient>
-          </TouchableOpacity> 
+      
+    <LinearGradient
     
-</ScrollView>
+        // Button Linear Gradient
+        colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
+      <View style={styles.header}>
+          <View style={styles.propicrow}>
+          <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
+          <Text style={styles.name}>Hi Dhruv</Text>
+          </View>
+          <View style={styles.icons}>
+            <Image source={require('../../assets/brainstromskill.png')} style={styles.icon} />
+            <Image source={require('../../assets/sleep.png')} style={styles.icon} />
+          </View>
+      </View>
+      <TouchableOpacity onPress={()=>{}}>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
+                  <Text style={styles.buttonText}>Community</Text>
+      </LinearGradient>
+      </TouchableOpacity>
+    </LinearGradient>
+    <CommunityGroup/>
+</View>
   );
 };
 
@@ -167,4 +158,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MoodTracker;
+export default MyJournal;

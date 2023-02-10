@@ -8,9 +8,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Myhome from '../HomeScreens/Myhome';
 import MyJournal from '../HomeScreens/MyJournal';
 import TrackTrigger from '../HomeScreens/Triggers/TrackTrigger';
-import Community from '../HomeScreens/Community';
+import Community from '../HomeScreens/Community/Community';
 import Colors from '../Constants/Colors';
 import { AuthContext } from '../Context/AuthContext';
+import MyJourney from '../HomeScreens/MyHome/MyJourney';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -135,7 +136,13 @@ export default function HomeScreen({navigation}){
       name="App"
       component={AppScreen}
       options={{headerShown: false}}
-      />     
+      />  
+
+      <Stack.Screen
+      name="MyJourney"
+      component={MyJourney}
+      options={{headerShown: false}}
+      />    
      
 
     </Stack.Navigator>

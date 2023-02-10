@@ -6,14 +6,46 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Activities from './Activities';
 import MyLogs from './MyLogs';
 
+
 const Tab = createMaterialTopTabNavigator();
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+const Card = () => {
+  return (
+      <LinearGradient
+    
+    // Button Linear Gradient
+    colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.somecontainer}>
+  <View style={styles.header}>
+      <View style={styles.propicrow}>
+      <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
+      <Text style={styles.name}>Hi Dhruv</Text>
+      </View>
+      <View style={styles.icons}>
+        <Image source={require('../../assets/brainstromskill.png')} style={styles.icon} />
+        <Image source={require('../../assets/sleep.png')} style={styles.icon} />
+      </View>
+  </View>
+  <TouchableOpacity onPress={()=>{}}>
+  <LinearGradient
+    // Button Linear Gradient
+    colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
+              <Text style={styles.buttonText}>My Journey</Text>
+              <Entypo name="chevron-right" size={24} color="black" />
+  </LinearGradient>
+  </TouchableOpacity>
+</LinearGradient>
+  );
+};
+
+
+
 const MyJourney = () => {
   return (
     <View style={styles.container}>
+      <Card />
       <Tab.Navigator
         initialRouteName="Tab1"
         tabBarOptions={{
@@ -23,8 +55,8 @@ const MyJourney = () => {
           style: { backgroundColor: '#FFFFFF' },
         }}
       >
-        <Tab.Screen name="Mood Tracker" component={Activities} />
-        <Tab.Screen name="MY Trigger" component={MyLogs} />
+        <Tab.Screen name="Activities" component={Activities} />
+        <Tab.Screen name="My Logs" component={MyLogs} />
       </Tab.Navigator>
     </View>
   );
