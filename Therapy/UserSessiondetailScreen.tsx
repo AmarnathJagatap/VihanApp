@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet, Text, View,  Linking, Alert } from 'react-native'
 import React, { useCallback } from 'react'
 import { Avatar,Button } from 'react-native-paper';
-import { Colors } from '../../constants/Colors';
+import Colors from '../Constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const windowWidth = Dimensions.get('window').width;

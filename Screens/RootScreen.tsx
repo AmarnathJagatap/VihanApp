@@ -1,5 +1,5 @@
 import React, { useEffect,useState, useContext} from 'react';
-import { StyleSheet, View,Image,ActivityIndicator } from 'react-native';
+import { StyleSheet, View,Image,ActivityIndicator,Text } from 'react-native';
 import { NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -12,6 +12,7 @@ import Colors  from '../Constants/Colors';
 import HomeScreen from './HomeScreen';
 import SignIn from './Login';
 import RegisterScreen from './Registration';
+
 
 
 const Stack = createStackNavigator();
@@ -41,7 +42,7 @@ const Authandler=()=> {
     return(
       <View style={styles.container}>
          <View>
-            <Image source={require('../assets/icon.png')} style={{alignSelf:'center',resizeMode:'center',marginHorizontal:10}}/>
+         <Text style={{fontSize:40,textAlign:'center'}}>Vihaan</Text>
         </View>  
         <ActivityIndicator
           color={Colors.light.tabIconSelected}

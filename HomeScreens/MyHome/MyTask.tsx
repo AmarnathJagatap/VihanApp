@@ -1,36 +1,101 @@
-import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Apilink } from '../../Constants/Apilink';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+let token;
 
 const MyTask = () => {
+  const [sessionNotes, setSessionNotes] = useState(null);
+  const [isChecked, setChecked] = useState(false);
+  const [isChecked1, setChecked1] = useState(false);
+
+  
+
+  const getNotesData = async()=>{
+      await AsyncStorage.getItem('token').then((value) =>{
+          if(value!==null){
+            token = JSON.parse(value)
+          }
+        })
+      await fetch(Apilink+`/auth/getnotes`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          }
+        })
+      .then((response)=>response.json())
+
+      .then((response)=>setSessionNotes(response?.session_notes))
+
+  }
+      useEffect(()=>{
+          getNotesData();
+      },[])
+
+ 
+
+  const handleClick = async (data) => {
+      let final_session_notes = [];
+      getNotesData();
+      ToastAndroid.showWithGravityAndOffset(
+          "Completed",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+        final_session_notes = sessionNotes?.notes.map((item) => {
+          if (item === data) {
+            return null
+          }
+          else {
+            return item
+          }
+        })
+        final_session_notes = final_session_notes.filter(function (el) {
+          return el != null;
+        });
+  
+        const postdata = async () => {
+          await AsyncStorage.getItem('token').then((value) =>{
+              if(value!==null){
+                token = JSON.parse(value)
+              }
+            })    
+          const response = await fetch(Apilink + '/auth/finishsession', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': token,
+            },
+            body: JSON.stringify({
+              "session_notes": final_session_notes,
+              "things_to_remember": sessionNotes?.things_to_remember
+            })
+          })
+          const data = await response.json()
+          console.log(data)
+        }
+        postdata(); 
+    }
   return (
     <View>
         <View>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>These are your task before next session.</Text>
+          {sessionNotes?.notes.length>0?
+         sessionNotes?.notes.map((item,index)=>(
           <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
               <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
-                <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Fake Confidence</Text>
+                <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}><Text style={{textAlign:'center',marginTop:4}}>{index+1}</Text></View>
+                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
               </View>                
-          </LinearGradient>
-          <LinearGradient
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
-                <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Rumination</Text>
-              </View>                
-          </LinearGradient>
-          <LinearGradient
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
-                <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Make new Friends</Text>
-              </View>                
-          </LinearGradient>  
+          </LinearGradient>)):<></>}
         </View>
 
     </View>
@@ -111,9 +176,9 @@ const styles = StyleSheet.create({
     },
     cardcontainer:{
       backgroundColor: '#fff',
-      height:windowHeight/12,
+      height:windowHeight/18,
       marginVertical:5,
-      marginHorizontal:10,
+      marginHorizontal:30,
       borderRadius: 10,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 6 },

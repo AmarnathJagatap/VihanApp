@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useContext } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Alert } from 'react-native';
 import { Entypo } from '@expo/vector-icons'; 
 import MyTask from './MyHome/MyTask';
 import Reflecback from './MyHome/ReflectBack';
@@ -8,12 +8,46 @@ import MainHome from './MyHome/MainHome';
 import { AuthContext } from '../Context/AuthContext';
 import MySelfCare from './MyHome/MySelfCare';
 import MyJourney from './MyHome/MyJourney';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Apilink } from '../Constants/Apilink';
+import { removeToken } from '../Services/AsyncStorageService';
+import UserTasks from './MyHome/UsersTask';
+import UsersReflectBack from './MyHome/UsersReflectback';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+let token;
 const Myhome = ({navigation}) => {
-  const [Item, setItem] = React.useState('main');
   const {homeScreenItem,setHomeScreenItem} = useContext(AuthContext)
+
+  const {setIsLoggedIn, setUserToken,userData} = React.useContext(AuthContext);
+  const handleLogout = async() =>{
+    await removeToken();
+    setIsLoggedIn(false);
+    setUserToken(null);
+  }
+    
+  const {setUserData} = useContext(AuthContext);
+  useEffect(()=>{
+    getUserData();
+   },[])
+    const getUserData = async()=> {
+      await AsyncStorage.getItem('token').then((value) =>{
+        if(value!==null){
+          token = JSON.parse(value)
+        }
+      })
+      await fetch(Apilink+`auth/getuser`, {
+      method: "GET",
+      headers: {
+        'Content-Type' : 'application/json',
+        'Authorization' : token
+      }
+    })
+    .then(response => response.json())
+    .then(data => setUserData(data))
+    .catch((err)=>Alert.alert(err.message))
+  }
   return (
     <View>
     <LinearGradient
@@ -40,9 +74,12 @@ const Myhome = ({navigation}) => {
       </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
+    <Text onPress={()=>{handleLogout()}}>Logout</Text>
     {homeScreenItem==="Home"?<MainHome/>:<></>}
     {homeScreenItem==="TASK"?<MyTask/>:<></>}
+    {homeScreenItem==="Users TASK"?<UserTasks/>:<></>}
     {homeScreenItem==="Reflect Back"?<Reflecback/>:<></>}
+    {homeScreenItem==="Users Reflect Back"?<UsersReflectBack/>:<></>}
     {homeScreenItem==="My Self Care"?<MySelfCare/>:<></>}
     </View>
   );

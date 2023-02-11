@@ -12,8 +12,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Avatar } from 'react-native-paper';
-import { Apilink } from '../../constants/Apilink';
-import { Colors } from '../../constants/Colors';
+import { Apilink } from '../Constants/Apilink';
+import Colors from '../Constants/Colors';
 import Lottie from 'lottie-react-native';
 
 

@@ -1,9 +1,9 @@
 import { Alert, Dimensions, Linking, StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Apilink } from '../../constants/Apilink';
+import { Apilink } from '../Constants/Apilink';
 import {Avatar, Button} from 'react-native-paper'
-import { Colors } from '../../constants/Colors';
+import Colors  from '../Constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 let token;
 const windowWidth = Dimensions.get('window').width;

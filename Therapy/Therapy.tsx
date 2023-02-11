@@ -1,9 +1,9 @@
 import {Text, Image, StyleSheet,  View, useWindowDimensions, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useContext } from 'react'
 import { Card, Title, Button, Paragraph } from 'react-native-paper'
-import { Colors } from '../../constants/Colors';
+import Colors from '../Constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../Context/AuthContext';
 
   
 const windowWidth = Dimensions.get('window').width;

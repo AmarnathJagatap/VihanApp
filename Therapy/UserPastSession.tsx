@@ -1,9 +1,9 @@
 import {  Dimensions, KeyboardAvoidingView, RefreshControl, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Colors } from '../../constants/Colors'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Colors from '../Constants/Colors'
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Apilink } from '../../constants/Apilink';
+import { Apilink } from '../Constants/Apilink';
 import Checkbox from 'expo-checkbox';
 
 

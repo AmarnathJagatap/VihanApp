@@ -8,7 +8,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Myhome from '../HomeScreens/Myhome';
 import MyJournal from '../HomeScreens/MyJournal';
 import TrackTrigger from '../HomeScreens/Triggers/TrackTrigger';
-import Community from '../HomeScreens/Community/Community';
 import Colors from '../Constants/Colors';
 import { AuthContext } from '../Context/AuthContext';
 import MyJourney from '../HomeScreens/MyHome/MyJourney';
@@ -16,6 +15,8 @@ import StressScore from '../QuizApp/Stressscore';
 import GroupDetails from '../ScheduleGroup/GroupDetails';
 import GroupData from '../ScheduleGroup/GroupData';
 import CreateGroup from '../ScheduleGroup/CreateGroup';
+import UserTaskDetailScreen from '../HomeScreens/MyHome/UserTaskDetailScreen';
+import UserReflecBackDetailScreen from '../HomeScreens/MyHome/UserReflecBackDetailScreen';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -131,10 +132,7 @@ export default function HomeScreen({navigation}){
   return(
     <Stack.Navigator 
     initialRouteName='App'
-    screenOptions={{
-      headerShadowVisible:false,
-      headerShown:false,
-    }}
+   
    >
       <Stack.Screen
       name="App"
@@ -168,6 +166,40 @@ export default function HomeScreen({navigation}){
         name="CreateGroup"
         component={CreateGroup}
         options={{headerShown: false}}   
+      />  
+     
+     <Stack.Screen
+        name="UserTaskDetailScreen"
+        component={UserTaskDetailScreen}
+        options={({ route }) =>
+         ({ title: route.params.name, 
+          headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
+          headerLeft : props => 
+          <View style={{flexDirection:'row'}}>
+            <MaterialCommunityIcons onPress={()=>navigation.goBack()} name="chevron-left" size={25} style={{marginLeft:10,marginTop:8}}/>
+
+            <Image
+          source={require('../assets/man.png')}
+          style={{ width: 40, height: 40, borderRadius: 40/2, marginLeft : 15 }} />
+          </View>
+         })}       
+      />  
+
+     <Stack.Screen
+        name="UserReflecBackDetailScreen"
+        component={UserReflecBackDetailScreen}
+        options={({ route }) =>
+         ({ title: route.params.name, 
+          headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
+          headerLeft : props => 
+          <View style={{flexDirection:'row'}}>
+            <MaterialCommunityIcons onPress={()=>navigation.goBack()} name="chevron-left" size={25} style={{marginLeft:10,marginTop:8}}/>
+
+            <Image
+          source={require('../assets/man.png')}
+          style={{ width: 40, height: 40, borderRadius: 40/2, marginLeft : 15 }} />
+          </View>
+         })}       
       />  
      
 

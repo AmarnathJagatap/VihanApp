@@ -13,8 +13,8 @@ import {
   RefreshControl
 } from 'react-native';
 import { Avatar } from 'react-native-paper';
-import { Apilink } from '../../constants/Apilink';
-import { Colors } from '../../constants/Colors';
+import { Apilink } from '../Constants/Apilink';
+import Colors from '../Constants/Colors';
 import { ScrollView } from 'react-native-virtualized-view'
 import Lottie from 'lottie-react-native';
 

@@ -1,10 +1,10 @@
 import { Dimensions, KeyboardAvoidingView, RefreshControl, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { Colors } from '../../constants/Colors'
+import Colors from '../Constants/Colors'
 import { Button, TextInput } from 'react-native-paper'
-import { Apilink } from '../../constants/Apilink';
+import { Apilink } from '../Constants/Apilink';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {MaterialCommunityIcons} from '@expo/vector-icons'
 
   
 const windowHeight = Dimensions.get('window').height;
@@ -203,7 +203,7 @@ const UserDetailScreen = ({route,navigation}) => {
                     flexGrow:1,
                 }}>{index+1}. {item}</Text>
             <TouchableOpacity onPress={()=>{deleteHomework(item)}}>
-                    <Icon name="delete" size={24} color={Colors.light.white} />
+                    <MaterialCommunityIcons name="delete" size={24} color={Colors.light.white} />
             </TouchableOpacity>
             </View>
         )):

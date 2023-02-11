@@ -48,7 +48,7 @@ const MyJourney = () => {
       <Card />
       <Tab.Navigator
         initialRouteName="Tab1"
-        tabBarOptions={{
+        screenOptions={{
           activeTintColor: '#000000',
           inactiveTintColor: '#808080',
           indicatorStyle: { backgroundColor: '#000000' },
