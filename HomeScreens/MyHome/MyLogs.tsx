@@ -1,14 +1,110 @@
 import { StyleSheet, Text, View,Image, TouchableOpacity, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
+import { Button, Modal, TextInput } from 'react-native-paper';
+import Colors from '../../Constants/Colors';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Apilink } from '../../Constants/Apilink';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
+let token;
 const MyLogs = () => {
+  const [mylogtitle,setmylogtitle] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [logData, setLogData] = useState({});
+
+  console.log(logData)
+
+  useEffect(()=>{
+    getMyLogs();
+  },[])
+
+  const getMyLogs = async () => {
+   await AsyncStorage.getItem('token').then((value) =>{
+     if(value!==null){
+       token = JSON.parse(value)
+     }
+   })
+  console.log(token)
+   await fetch(Apilink + '/auth/getmylogs', {
+       method: 'GET',
+       headers: {
+           'Content-Type': 'application/json',
+           'Authorization': token
+       },
+   })
+   .then(response => response.json())
+   .then(data => setLogData(data))
+}
+
+  const handleSubmit = async () => {
+    const date_json = selectedDate.getTime()
+    console.log(date_json)
+   await AsyncStorage.getItem('token').then((value) =>{
+     if(value!==null){
+       token = JSON.parse(value)
+     }
+   })
+
+   await fetch(Apilink + '/auth/postmylogs', {
+       method: 'POST',
+       headers: {
+           'Content-Type': 'application/json',
+           'Authorization': token
+       },
+       body: JSON.stringify({
+        my_logs: [{
+          title:mylogtitle,
+          date:date_json
+      }]
+       })
+   })
+   .then((res)=>{console.log(res)})
+   .then()
+ 
+}
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    setSelectedDate(date);
+    hideDatePicker();
+  };
   return (
     <View>
     <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Upcoming Events</Text>
+    <TextInput 
+             mode='outlined'
+             style={{
+                 marginHorizontal:22,
+                 height:50,
+                 backgroundColor:Colors.light.white,
+                 marginVertical:10
+                 }} 
+            label="Add Logs"
+            outlineColor={'rgba(0,0,0,0.55)'}
+            activeOutlineColor={'rgba(0,0,0,0.65)'}
+            onChangeText={(text)=>setmylogtitle(text)}
+    />
+    {mylogtitle.length>0?  <><Button style={{backgroundColor:Colors.light.tabIconSelected,alignSelf:'center',width:'60%'}} color={Colors.light.white} onPress={showDatePicker} >Select Date and Time</Button>     
+
+<DateTimePickerModal
+  isVisible={isDatePickerVisible}
+  mode="datetime"
+  onConfirm={handleConfirm}
+  onCancel={hideDatePicker}
+/>
+<Button style={{backgroundColor:Colors.light.tabIconSelected, margin:10,alignSelf:'center',width:'50%'}} color={Colors.light.white} onPress={()=>{handleSubmit()}}>Submit</Button></>:<></>}
+   
     <LinearGradient
       colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
           <Image source={require('../../assets/cardImage.png')} style={{borderRadius:30,width:windowWidth-20,height:windowHeight/5.8}}/>

@@ -10,8 +10,7 @@ let token;
 
 const MyTask = () => {
   const [sessionNotes, setSessionNotes] = useState(null);
-  const [isChecked, setChecked] = useState(false);
-  const [isChecked1, setChecked1] = useState(false);
+
 
   
 
@@ -37,58 +36,12 @@ const MyTask = () => {
           getNotesData();
       },[])
 
- 
-
-  const handleClick = async (data) => {
-      let final_session_notes = [];
-      getNotesData();
-      ToastAndroid.showWithGravityAndOffset(
-          "Completed",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );
-        final_session_notes = sessionNotes?.notes.map((item) => {
-          if (item === data) {
-            return null
-          }
-          else {
-            return item
-          }
-        })
-        final_session_notes = final_session_notes.filter(function (el) {
-          return el != null;
-        });
-  
-        const postdata = async () => {
-          await AsyncStorage.getItem('token').then((value) =>{
-              if(value!==null){
-                token = JSON.parse(value)
-              }
-            })    
-          const response = await fetch(Apilink + '/auth/finishsession', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': token,
-            },
-            body: JSON.stringify({
-              "session_notes": final_session_notes,
-              "things_to_remember": sessionNotes?.things_to_remember
-            })
-          })
-          const data = await response.json()
-          console.log(data)
-        }
-        postdata(); 
-    }
   return (
     <View>
         <View>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>These are your task before next session.</Text>
           {sessionNotes?.notes.length>0?
-         sessionNotes?.notes.map((item,index)=>(
+            sessionNotes?.notes.map((item,index)=>(
           <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
               <View style={{flexDirection:'row',alignItems:'center',padding:5}}>

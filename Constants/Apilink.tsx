@@ -1,1 +1,1 @@
-export const Apilink = `https://vihaniisc.pythonanywhere.com/`
+export const Apilink = `https://vihanapi.pythonanywhere.com`

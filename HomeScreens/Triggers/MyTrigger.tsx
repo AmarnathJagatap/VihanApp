@@ -1,79 +1,129 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, ToastAndroid } from 'react-native';
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
+import { Apilink } from '../../Constants/Apilink';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const MainComponent = () => {
-  return (
-    <ScrollView>
-    <View>
-      <Text style={{marginHorizontal:30,textAlign:'center',marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>30th Friday</Text>               
-    </View>
+let token;
+const MainComponent = ({navigation}) => {
+  const [triggers,setTriggers] = useState({});
+  useEffect(()=>{
+    getTriggers()
+  },[])
+  const getTriggers = async()=>{
+    await AsyncStorage.getItem('token').then((value) =>{
+        if(value!==null){
+          token = JSON.parse(value)
+        }
+      })
+    await fetch(Apilink+`/auth/getmylogs`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+      })
+    .then((response)=>(response.json()))
+    .then((response)=>setTriggers(response?.my_logs)) 
+} 
 
-    <View>
-      <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Good</Text>
-      <View style={{width:windowWidth-20,flexDirection:'row',justifyContent:'space-around',marginVertical:10}}>
-        <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30}}>              
+const upDateTrigger = async(Index)=>{
+  await AsyncStorage.getItem('token').then((value) =>{
+      if(value!==null){
+        token = JSON.parse(value)
+      }
+    })
+  await fetch(Apilink+`/auth/updatemylogs`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      }, 
+      body: JSON.stringify({
+        "index":Index
+      })
+    })
+  .then((response)=>(response.json()))
+  getTriggers()
+  ToastAndroid.showWithGravityAndOffset(
+      "UpDated",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50
+    ); 
+} 
+
+console.log(triggers)
+
+  return (
+    <>
+      <TouchableOpacity onPress={()=>navigation.navigate('AddTrigger')}>
+        <LinearGradient
+              colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{width:windowWidth-30,height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
+                <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Add Trigger</Text>
         </LinearGradient>
-        <View>
-        <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Trackking</Text>        
-        <Text style={{ fontSize: 12,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Go often</Text>        
-        </View>
-        <TouchableOpacity>
-          <FontAwesome name="chevron-right" size={20} color={'rgba(0, 0, 0, 0.60)'} style={{justifyContent:'center',alignItems:'center',marginVertical:8,marginRight:8}}/>
-        </TouchableOpacity>                    
-        
-      </View> 
-      <View style={{width:windowWidth-20,flexDirection:'row',justifyContent:'space-around',marginVertical:10}}>
-        <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30}}>              
-        </LinearGradient>
-        <View>
-        <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Egg Curvy</Text>        
-        <Text style={{ fontSize: 12,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Try again</Text>        
-        </View>
-        <TouchableOpacity>
-          <FontAwesome name="chevron-right" size={20} color={'rgba(0, 0, 0, 0.60)'} style={{justifyContent:'center',alignItems:'center',marginVertical:8,marginRight:8}}/>
-        </TouchableOpacity>                    
-        
-      </View>                            
-    </View>
-    <View>
-      <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Bad</Text>
-      <View style={{width:windowWidth-20,flexDirection:'row',justifyContent:'space-around',marginVertical:10}}>
-        <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30}}>              
-        </LinearGradient>
-        <View>
-        <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Park</Text>        
-        <Text style={{ fontSize: 12,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Avoid It</Text>        
-        </View>
-        <TouchableOpacity>
-          <FontAwesome name="chevron-right" size={20} color={'rgba(0, 0, 0, 0.60)'} style={{justifyContent:'center',alignItems:'center',marginVertical:8,marginRight:8}}/>
-        </TouchableOpacity>                    
-        
-      </View> 
-      <View style={{width:windowWidth-20,flexDirection:'row',justifyContent:'space-around',marginVertical:10}}>
-        <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30}}>              
-        </LinearGradient>
-        <View>
-        <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Decision</Text>        
-        <Text style={{ fontSize: 12,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Avoid It</Text>        
-        </View>
-        <TouchableOpacity>
-          <FontAwesome name="chevron-right" size={20} color={'rgba(0, 0, 0, 0.60)'} style={{justifyContent:'center',alignItems:'center',marginVertical:8,marginRight:8}}/>
-        </TouchableOpacity>                    
-        
-      </View>                            
+    </TouchableOpacity>
+    <ScrollView>     
+      <View>
+          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Good</Text>
+        {triggers?.mylogs?.length>0?
+         triggers?.mylogs.map((item,index)=>{
+          if(item.feel==="Good"){
+            return(
+              <TouchableOpacity onPress={()=>{}}>
+                  <View style={{width:windowWidth-20,flexDirection:'row',justifyContent:'space-around',marginVertical:10}}>
+                    <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30}}>              
+                    </LinearGradient>
+                    <View>
+                    <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>{item.trigger}</Text>        
+                    <Text style={{ fontSize: 12,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Go often</Text>        
+                    </View>
+                    <TouchableOpacity onPress={()=>{upDateTrigger(index)}} style={{backgroundColor:'#8AFF8A',width:70,padding:10,borderRadius:30}}>
+                       <Text style={{textAlign:'center'}}>Delete</Text>
+                    </TouchableOpacity>
+                </View>
+             </TouchableOpacity>                 
+
+            )
+          }
+         }):<></>}                          
+      </View>
+      <View>
+          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Bad</Text>
+          {triggers?.mylogs?.length>0?
+         triggers?.mylogs.map((item,index)=>{
+          if(item.feel==="Bad"){
+            return(
+              <View style={{width:windowWidth-20,flexDirection:'row',justifyContent:'space-around',marginVertical:10}}>
+                <LinearGradient colors={['#FBBAA8','rgba(251, 239, 200, 0) @ 100%']} style={{width:30,height:30,borderRadius:30}}>              
+                </LinearGradient>
+                <View>
+                <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>{item.trigger}</Text>        
+                <Text style={{ fontSize: 12,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Go often</Text>        
+                </View>
+                <TouchableOpacity onPress={()=>{upDateTrigger(index)}} style={{backgroundColor:'#8AFF8A',width:70,padding:10,borderRadius:30}}>
+                       <Text style={{textAlign:'center'}}>Delete</Text>
+                    </TouchableOpacity>
+             </View>
+
+            )
+          }
+         }):<></>}  
+                              
     </View>
     <TouchableOpacity>
               <LinearGradient
                     colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{width:windowWidth-30,height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
                       <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Check History</Text>
               </LinearGradient>
-          </TouchableOpacity>     
+      </TouchableOpacity>     
     
 </ScrollView>
+</>
   );
 };
 

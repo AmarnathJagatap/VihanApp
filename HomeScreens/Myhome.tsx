@@ -37,7 +37,7 @@ const Myhome = ({navigation}) => {
           token = JSON.parse(value)
         }
       })
-      await fetch(Apilink+`auth/getuser`, {
+      await fetch(Apilink+`/auth/getuser`, {
       method: "GET",
       headers: {
         'Content-Type' : 'application/json',

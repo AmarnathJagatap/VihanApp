@@ -66,7 +66,7 @@ const SignIn = ({navigation}) => {
               50
             );
           }else{
-            const res = await fetch(Apilink+`auth/login`, {
+            const res = await fetch(Apilink+`/auth/login`, {
             method: "POST",
             body : JSON.stringify({
                 "username": formData.username,

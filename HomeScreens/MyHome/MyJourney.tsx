@@ -46,18 +46,7 @@ const MyJourney = () => {
   return (
     <View style={styles.container}>
       <Card />
-      <Tab.Navigator
-        initialRouteName="Tab1"
-        screenOptions={{
-          activeTintColor: '#000000',
-          inactiveTintColor: '#808080',
-          indicatorStyle: { backgroundColor: '#000000' },
-          style: { backgroundColor: '#FFFFFF' },
-        }}
-      >
-        <Tab.Screen name="Activities" component={Activities} />
-        <Tab.Screen name="My Logs" component={MyLogs} />
-      </Tab.Navigator>
+      <Activities/>
     </View>
   );
 };

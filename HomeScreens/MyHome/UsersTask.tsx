@@ -27,7 +27,7 @@ const UserTasks = () => {
           token = JSON.parse(value)
         }
       })
-      fetch(Apilink+`auth/getnotesdoc`, {
+      fetch(Apilink+`/auth/getnotesdoc`, {
         method: "GET",
         headers: {
             'Content-Type' : 'application/json',
@@ -35,6 +35,7 @@ const UserTasks = () => {
         }
         })
         .then((response)=>response.json())
+        .then((response)=>console.log(response))
         .then((responseJson)=>{
           setMasterDataSource(responseJson?.all_data)
           setFilteredDataSource(responseJson?.all_data)
