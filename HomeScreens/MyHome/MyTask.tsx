@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
+import {Entypo} from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -10,8 +12,7 @@ let token;
 
 const MyTask = () => {
   const [sessionNotes, setSessionNotes] = useState(null);
-
-
+  const navigation = useNavigation();
   
 
   const getNotesData = async()=>{
@@ -42,13 +43,16 @@ const MyTask = () => {
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>These are your task before next session.</Text>
           {sessionNotes?.notes.length>0?
             sessionNotes?.notes.map((item,index)=>(
+          <TouchableOpacity onPress={()=>{navigation.navigate('UserTaskUpdate',{name:item.title,notesDetail:item})}}>
           <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
               <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
                 <View style={{marginHorizontal:20,width:30,height:30,borderRadius:30,backgroundColor:'#ffffff'}}><Text style={{textAlign:'center',marginTop:4}}>{index+1}</Text></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
+                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
+                <Entypo name="chevron-right" style={{marginVertical:5}}  size={20}/>
               </View>                
-          </LinearGradient>)):<></>}
+          </LinearGradient>
+          </TouchableOpacity>)):<></>}
         </View>
 
     </View>
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
     },
     cardcontainer:{
       backgroundColor: '#fff',
-      height:windowHeight/18,
+      height:windowHeight/16,
       marginVertical:5,
       marginHorizontal:30,
       borderRadius: 10,

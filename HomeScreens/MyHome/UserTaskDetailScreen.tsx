@@ -27,6 +27,12 @@ const UserTaskDetailScreen = ({route,navigation}) => {
     console.log(name)
     const [homework, setHomework] = useState('');
 
+    const SessionNotes = {
+      "title":homework,
+      "notes": "",
+      "status":"NotComplited"
+    }
+
     const addHomework = async()=>{
         await AsyncStorage.getItem('token').then((value) =>{
             if(value!==null){
@@ -41,7 +47,7 @@ const UserTaskDetailScreen = ({route,navigation}) => {
             },
             body: JSON.stringify({
               "username": name,
-              "session_notes": homework,
+              "session_notes": SessionNotes,
               "things_to_remember": ""
             })
           })
@@ -55,6 +61,37 @@ const UserTaskDetailScreen = ({route,navigation}) => {
             50
           );       
     } 
+
+    const deleteHomework = async(item_to_be_removed)=>{
+      let data_new = sessionNotes['notes']?.filter(function(item){
+          return item.title!== item_to_be_removed.title
+      })
+      await AsyncStorage.getItem('token').then((value) =>{
+          if(value!==null){
+            token = JSON.parse(value)
+          }
+        })
+      await fetch(Apilink+`/auth/postnotes`,{
+          method:'POST',
+          headers:{
+              'Content-Type':'application/json',
+              'Authorization':token,
+          },
+          body: JSON.stringify({
+              "username": name,
+              "session_notes": data_new,
+              "things_to_remember": ""
+            })
+      })
+      ToastAndroid.showWithGravityAndOffset(
+          "Homwork delted Back and Refresh",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+
+  }
     
   return (
    <ScrollView 
@@ -104,10 +141,15 @@ const UserTaskDetailScreen = ({route,navigation}) => {
         sessionNotes['notes']?.map((item)=>(
             <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:5}}>
-                <View style={{flexDirection:'row',justifyContent:'space-between',width:windowWidth/3}}>
-                    <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
-                    </View>                
+              <View>
+                    <Text style={{marginHorizontal:10,textAlign:"center",marginTop:5,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
+                    <View style={{flexDirection:"row",justifyContent:"space-between",paddingVertical:5,paddingHorizontal:10}}>
+                       <Text style={{fontFamily:'Poppins-Regular',fontSize:13,marginTop:6}}>Status: {item.status}</Text>
+                       <TouchableOpacity onPress={()=>{deleteHomework(item)}} style={{backgroundColor:"#FF5C5C",padding:10,borderRadius:15}}>
+                            <Text>Delete</Text>
+                       </TouchableOpacity>                     
+                    </View>
+                    <Text style={{paddingHorizontal:10,textAlign:'justify',paddingVertical:5}}>Notes : {item.notes}</Text>
                 </View>
 
           </LinearGradient>
@@ -139,7 +181,7 @@ const styles = StyleSheet.create({
     cardcontainer:{
         justifyContent:'space-evenly',
         backgroundColor: '#fff',
-        height:windowHeight/15,
+        height:windowHeight/6,
         marginVertical:5,
         marginHorizontal:22,
         borderRadius: 10,
