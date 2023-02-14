@@ -12,6 +12,7 @@ import Colors  from '../Constants/Colors';
 import HomeScreen from './HomeScreen';
 import SignIn from './Login';
 import RegisterScreen from './Registration';
+import IntroScreen from './IntroScreen';
 
 
 
@@ -72,10 +73,15 @@ const Authandler=()=> {
         :(
           <>
           <Stack.Screen
+            name="IntroScreen"
+            component={IntroScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="LoginScreen"
             component={SignIn}
             options={{headerShown: false}}
-          />
+          />         
       
           <Stack.Screen
             name="RegisterScreen"
