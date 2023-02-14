@@ -7,7 +7,7 @@ import Reflecback from './MyHome/ReflectBack';
 import MainHome from './MyHome/MainHome';
 import { AuthContext } from '../Context/AuthContext';
 import MySelfCare from './MyHome/MySelfCare';
-import MyJourney from './MyHome/MyJourney';
+import MyJourney from './MyHome/MyProfile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../Constants/Apilink';
 import { removeToken } from '../Services/AsyncStorageService';
@@ -18,14 +18,11 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let token;
 const Myhome = ({navigation}) => {
+
   const {homeScreenItem,setHomeScreenItem} = useContext(AuthContext)
 
-  const {setIsLoggedIn, setUserToken,userData} = React.useContext(AuthContext);
-  const handleLogout = async() =>{
-    await removeToken();
-    setIsLoggedIn(false);
-    setUserToken(null);
-  }
+  const {userData} = React.useContext(AuthContext);
+
     
   const {setUserData} = useContext(AuthContext);
   useEffect(()=>{
@@ -58,7 +55,7 @@ const Myhome = ({navigation}) => {
             <TouchableOpacity onPress={()=>{navigation.navigate('MyJourney')}}>
           <Image source={require('../assets/propic.jpg')} style={styles.profilePic} />
           </TouchableOpacity>
-          <Text style={styles.name}>Hi Dhruv</Text>
+          <Text style={styles.name}>Hi {userData?.user_info?.username}</Text>
           </View>
           <View style={styles.icons}>
             <Image source={require('../assets/brainstromskill.png')} style={styles.icon} />
@@ -74,7 +71,6 @@ const Myhome = ({navigation}) => {
       </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
-    <Text onPress={()=>{handleLogout()}}>Logout</Text>
     {homeScreenItem==="Home"?<MainHome/>:<></>}
     {homeScreenItem==="TASK"?<MyTask/>:<></>}
     {homeScreenItem==="Users TASK"?<UserTasks/>:<></>}

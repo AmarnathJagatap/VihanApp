@@ -13,10 +13,9 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 let token;
 
-const UserTaskUpdate = ({route,navigation}) => {
-    const {notesDetail} = route.params;   
+const UserUpdateReflectBack = ({route,navigation}) => {
+    const {reflectBack} = route.params;   
     const [Notes, setNotes]= useState('');
-    const [isButtonPressed, setIsButtonPressed] = useState(notesDetail.status); 
     
     const updateNotes = async()=>{
         await AsyncStorage.getItem('token').then((value) =>{
@@ -31,12 +30,12 @@ const UserTaskUpdate = ({route,navigation}) => {
               'Authorization': token,
             },
             body: JSON.stringify({
-              "session_notes":{
-                "title": notesDetail.title,
-                "notes": Notes,
-                "status": isButtonPressed
-              },
-              "things_to_remember":""
+              "session_notes": "",
+              "things_to_remember":{
+                "title": reflectBack.title,
+                "date": reflectBack.date,
+                "notes":Notes              
+              }
             })
           })
         .then((response)=>{response.json()})
@@ -49,7 +48,6 @@ const UserTaskUpdate = ({route,navigation}) => {
             50
           );
         setNotes('')
-        setIsButtonPressed('')    
     } 
   return (
    <ScrollView 
@@ -63,37 +61,7 @@ const UserTaskUpdate = ({route,navigation}) => {
          margin:10}}
          nestedScrollEnabled = {true}>
         <View>
-            <View style={{flexDirection:'row',width:windowWidth,justifyContent:'space-evenly',marginVertical:30}}>
-                <TouchableOpacity
-                        onPress={() => setIsButtonPressed("Completed")}
-                    >
-                      <LinearGradient colors={['rgba(0,0,0,0.68)','rgba(0,0,0,0.38)','rgba(0,0,0,0.08)']}  style={[
-                        styles.button,
-                        isButtonPressed==="Completed" ? styles.buttonPressed : null,
-                        ]}>
-
-                        <Text style={styles.buttonText}>Completed</Text>
-                        {isButtonPressed==="Completed" && (
-                        <FontAwesome name='check-circle' size={20} color="#2ecc71" style={styles.icon} />
-                        )}
-                        </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity
-                        onPress={() => setIsButtonPressed("Not Completed")}
-                    >
-                      <LinearGradient colors={['rgba(0,0,0,0.68)','rgba(0,0,0,0.38)','rgba(0,0,0,0.08)']}  style={[
-                        styles.button,
-                        isButtonPressed==="Not Completed" ? styles.buttonBadPressed : null,
-                        ]}>
-
-                        <Text style={styles.buttonText}>Not Completed</Text>
-                        {isButtonPressed==="Not Completed" && (
-                        <FontAwesome name='check-circle' size={20} color="#FF0000" style={styles.icon} />
-                        )}
-                        </LinearGradient>
-                </TouchableOpacity>
-
-            </View>       
+              
         <TextInput 
              mode='outlined'
              value={Notes}
@@ -108,7 +76,7 @@ const UserTaskUpdate = ({route,navigation}) => {
             activeOutlineColor={'rgba(0,0,0,0.65)'}
             onChangeText={(text)=>setNotes(text)}
         />
-          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>Previous Notes : {notesDetail.notes}</Text>
+        <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>Previous Notes : {reflectBack.notes}</Text>
         {Notes.length>0?<TouchableOpacity onPress={()=>{updateNotes()}}>
               <LinearGradient
                     colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
@@ -123,7 +91,7 @@ const UserTaskUpdate = ({route,navigation}) => {
   )
 }
 
-export default UserTaskUpdate
+export default UserUpdateReflectBack
 
 const styles = StyleSheet.create({
     container:{

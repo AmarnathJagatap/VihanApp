@@ -23,8 +23,7 @@ const Card = () => {
       <Text style={styles.name}>Hi Dhruv</Text>
       </View>
       <View style={styles.icons}>
-        <Image source={require('../../assets/brainstromskill.png')} style={styles.icon} />
-        <Image source={require('../../assets/sleep.png')} style={styles.icon} />
+        
       </View>
   </View>
   <TouchableOpacity onPress={()=>{}}>

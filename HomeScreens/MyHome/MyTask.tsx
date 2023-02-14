@@ -54,7 +54,6 @@ const MyTask = () => {
           </LinearGradient>
           </TouchableOpacity>)):<></>}
         </View>
-
     </View>
   )
 }

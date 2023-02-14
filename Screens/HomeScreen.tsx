@@ -10,7 +10,7 @@ import MyJournal from '../HomeScreens/MyJournal';
 import TrackTrigger from '../HomeScreens/Triggers/TrackTrigger';
 import Colors from '../Constants/Colors';
 import { AuthContext } from '../Context/AuthContext';
-import MyJourney from '../HomeScreens/MyHome/MyJourney';
+import MyJourney from '../HomeScreens/MyHome/MyProfile';
 import StressScore from '../QuizApp/Stressscore';
 import GroupDetails from '../ScheduleGroup/GroupDetails';
 import GroupData from '../ScheduleGroup/GroupData';
@@ -19,6 +19,8 @@ import UserTaskDetailScreen from '../HomeScreens/MyHome/UserTaskDetailScreen';
 import UserReflecBackDetailScreen from '../HomeScreens/MyHome/UserReflecBackDetailScreen';
 import AddMyTriger from '../HomeScreens/Triggers/AddMyTriger';
 import UserTaskUpdate from '../HomeScreens/MyHome/UserTaskUpdate';
+import UserUpdateReflectBack from '../HomeScreens/MyHome/UserUpdateReflectBack';
+import CheckHistory from '../HomeScreens/Triggers/CheckHistory';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -221,11 +223,41 @@ export default function HomeScreen({navigation}){
          })}       
       /> 
 
+<Stack.Screen
+        name="UserUpdateReflectback"
+        component={UserUpdateReflectBack}
+        options={({ route }) =>
+         ({ title: route.params.name, 
+          headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
+          headerLeft : props => 
+          <View style={{flexDirection:'row'}}>
+            <MaterialCommunityIcons onPress={()=>navigation.goBack()} name="chevron-left" size={25} style={{marginLeft:10,marginTop:8}}/>
+
+            <Image
+          source={require('../assets/man.png')}
+          style={{ width: 40, height: 40, borderRadius: 40/2, marginLeft : 15 }} />
+          </View>
+         })}       
+      /> 
+
       <Stack.Screen
         name="AddTrigger"
         component={AddMyTriger}
         options={() =>
          ({ title: "Add Trigger", 
+          headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
+          headerLeft : props => 
+          <View style={{flexDirection:'row'}}>
+            <MaterialCommunityIcons onPress={()=>navigation.goBack()} name="chevron-left" size={25} style={{marginLeft:10,marginTop:8}}/>
+          </View>
+         })}       
+      />  
+
+<Stack.Screen
+        name="Checkhistory"
+        component={CheckHistory}
+        options={() =>
+         ({ title: "Check History", 
           headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
           headerLeft : props => 
           <View style={{flexDirection:'row'}}>

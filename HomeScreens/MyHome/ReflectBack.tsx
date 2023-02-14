@@ -1,8 +1,9 @@
 import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { LinearGradient } from 'expo-linear-gradient'
+import {Entypo} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -10,8 +11,7 @@ const windowHeight = Dimensions.get('window').height;
 let token;
 const Reflecback = () => {
   const [sessionNotes, setSessionNotes] = useState(null);
-  const [isChecked, setChecked] = useState(false);
-  const [isChecked1, setChecked1] = useState(false);
+  const navigation = useNavigation();
 
   
 
@@ -39,59 +39,21 @@ const Reflecback = () => {
 
  
 
-  const handleClick = async (data) => {
-      let final_session_notes = [];
-      getNotesData();
-      ToastAndroid.showWithGravityAndOffset(
-          "Completed",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );
-        final_session_notes = sessionNotes?.notes.map((item) => {
-          if (item === data) {
-            return null
-          }
-          else {
-            return item
-          }
-        })
-        final_session_notes = final_session_notes.filter(function (el) {
-          return el != null;
-        });
-  
-        const postdata = async () => {
-          await AsyncStorage.getItem('token').then((value) =>{
-              if(value!==null){
-                token = JSON.parse(value)
-              }
-            })    
-          const response = await fetch(Apilink + '/auth/finishsession', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': token,
-            },
-            body: JSON.stringify({
-              "session_notes": final_session_notes,
-              "things_to_remember": sessionNotes?.things_to_remember
-            })
-          })
-          const data = await response.json()
-          console.log(data)
-        }
-        postdata(); 
-    }
+
   return (
     <View>
         <View>   
         {sessionNotes?.things_to_remember.length>0?
          sessionNotes?.things_to_remember.map((item)=>(     
-              <View style={{flexDirection:'row',alignItems:'center',padding:5}}>
-                <View style={{marginHorizontal:20,width:15,height:15,borderRadius:30,backgroundColor:'rgba(0,0,0,0.4)'}}></View>
-                <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
-              </View> )):<></>}              
+          <>  
+              <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Bold',fontSize:13}}>{item.date}</Text>
+              <TouchableOpacity onPress={()=>{navigation.navigate('UserUpdateReflectback',{name:item.title,reflectBack:item})}} style={{flexDirection:'row',justifyContent:'space-evenly',alignItems:'center',padding:5}}>
+                <View style={{width:10,height:10,borderRadius:30,backgroundColor:'rgba(0,0,0,0.4)'}}></View>
+                <Text style={{marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
+                <Entypo name='chevron-right' size={15} />
+              </TouchableOpacity>
+              
+            </> )):<></>}              
          
         </View>
 

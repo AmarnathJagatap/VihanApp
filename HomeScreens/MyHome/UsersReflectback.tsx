@@ -27,7 +27,7 @@ const UsersReflectBack = () => {
           token = JSON.parse(value)
         }
       })
-      fetch(Apilink+`auth/getnotesdoc`, {
+      fetch(Apilink+`/auth/getnotesdoc`, {
         method: "GET",
         headers: {
             'Content-Type' : 'application/json',

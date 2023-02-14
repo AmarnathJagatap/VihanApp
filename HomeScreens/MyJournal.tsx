@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, Button } from 'react-native';
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
 import MainComponent from './MyJournal/MainComponent';
-import TopTabs from './MyJournal/TopTabs';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -21,8 +20,7 @@ const MyJournal = () => {
           <Text style={styles.name}>Hi Dhruv</Text>
           </View>
           <View style={styles.icons}>
-            <Image source={require('../assets/brainstromskill.png')} style={styles.icon} />
-            <Image source={require('../assets/sleep.png')} style={styles.icon} />
+            
           </View>
       </View>
       <TouchableOpacity onPress={()=>{}}>

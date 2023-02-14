@@ -17,15 +17,34 @@ const wait = (timeout) => {
 const UserReflecBackDetailScreen = ({route,navigation}) => {
     const {sessionNotes,name} = route.params;
     const [refreshing, setRefreshing] = React.useState(false);
-
+    console.log(sessionNotes["things_to_remember"])
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
       wait(2000).then(() => setRefreshing(false));
     }, []);
   
 
-    console.log(name)
     const [homework, setHomework] = useState('');
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const d = new Date();
+    let day = d.getDate();
+    let year = d.getFullYear();
+    let hour = d.getHours();
+    let minute=d.getMinutes();
+    let month = monthNames[d.getMonth()];
+    
+    const CurrentDate = `${day}th ${month} ${year} at ${hour}:${minute}` 
+
+
+    const reflect = {
+      "title":"",
+      "date": CurrentDate,
+      "notes":""
+    }
 
     const addHomework = async()=>{
         await AsyncStorage.getItem('token').then((value) =>{
@@ -42,13 +61,13 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
             body: JSON.stringify({
               "username": name,
               "session_notes": "",
-              "things_to_remember": homework
+              "things_to_remember": reflect
             })
           })
         .then((response)=>{response.json()})
         .then((response)=>console.log(response)) 
         ToastAndroid.showWithGravityAndOffset(
-            "Homwork add Go Back and Refresh",
+            "Relfect Back is added Go Back and Refresh",
             ToastAndroid.LONG,
             ToastAndroid.BOTTOM,
             25,
@@ -90,7 +109,7 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
                  backgroundColor:Colors.light.white,
                  marginVertical:10
                  }} 
-            label="Add Task"
+            label="Add  Back"
             outlineColor={'rgba(0,0,0,0.55)'}
             activeOutlineColor={'rgba(0,0,0,0.65)'}
             onChangeText={(text)=>setHomework(text)}
@@ -104,11 +123,10 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
         sessionNotes['things_to_remember']?.map((item)=>(
             <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:5}}>
-                <View style={{flexDirection:'row',justifyContent:'space-between',width:windowWidth/3}}>
-                    <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
-                    </View>                
-                </View>
+                <View style={{}}>
+                <Text style={{marginHorizontal:10,padding:5,marginTop:10,marginBottom:5,fontFamily:'Poppins-Bold',fontSize:13}}>{item.date}</Text>
+                <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
+                </View>                
 
           </LinearGradient>
         )):
@@ -139,7 +157,7 @@ const styles = StyleSheet.create({
     cardcontainer:{
         justifyContent:'space-evenly',
         backgroundColor: '#fff',
-        height:windowHeight/15,
+        height:windowHeight/8,
         marginVertical:5,
         marginHorizontal:22,
         borderRadius: 10,
