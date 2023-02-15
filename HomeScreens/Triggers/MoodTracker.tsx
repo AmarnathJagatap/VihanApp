@@ -53,7 +53,6 @@ const MoodTracker = () => {
 
       if(CheckDate?.length>0){
         CheckDate[0]?.mood.push(value)
-        console.log(CheckDate[0]?.mood.push(value))
         updateMoodTracker();
       }else{
         postMoodTracker();
