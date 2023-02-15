@@ -71,12 +71,11 @@ const UserUpdateReflectBack = ({route,navigation}) => {
                  backgroundColor:Colors.light.white,
                  marginVertical:10
                  }} 
-            label="Add Notes"
+            label={reflectBack.notes}
             outlineColor={'rgba(0,0,0,0.55)'}
             activeOutlineColor={'rgba(0,0,0,0.65)'}
             onChangeText={(text)=>setNotes(text)}
         />
-        <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>Previous Notes : {reflectBack.notes}</Text>
         {Notes.length>0?<TouchableOpacity onPress={()=>{updateNotes()}}>
               <LinearGradient
                     colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
