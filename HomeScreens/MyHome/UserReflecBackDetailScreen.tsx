@@ -1,5 +1,5 @@
 import { Dimensions, KeyboardAvoidingView, RefreshControl, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Colors from '../../Constants/Colors'
 import { Avatar, Button, TextInput } from 'react-native-paper'
 import { Apilink } from '../../Constants/Apilink';
@@ -17,36 +17,82 @@ const wait = (timeout) => {
 const UserReflecBackDetailScreen = ({route,navigation}) => {
     const {sessionNotes,name} = route.params;
     const [refreshing, setRefreshing] = React.useState(false);
-    console.log(sessionNotes["things_to_remember"])
+    const [things, setThings] = useState();
+    const [homework, setHomework] = useState('');
+
+
+    useEffect(()=>{
+      setThings(sessionNotes["things_to_remember"])
+    },[])
+
+    
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
       wait(2000).then(() => setRefreshing(false));
     }, []);
-  
-
-    const [homework, setHomework] = useState('');
 
     const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
+    "July", "August", "September", "October", "November", "December"
+  ];
 
-    const d = new Date();
-    let day = d.getDate();
-    let year = d.getFullYear();
-    let hour = d.getHours();
-    let minute=d.getMinutes();
-    let month = monthNames[d.getMonth()];
-    
-    const CurrentDate = `${day}th ${month} ${year} at ${hour}:${minute}` 
+  const d = new Date();
+  let day = d.getDate();
+  let year = d.getFullYear();
+  let month = monthNames[d.getMonth()];
+  
+  const CurrentDate = `${day}th ${month} ${year}` 
 
 
-    const reflect = {
-      "title":"",
-      "date": CurrentDate,
-      "notes":""
+  const CheckDate = things?.filter(object => object.date===CurrentDate)
+
+
+    const decisionFunction = () =>{
+      if(CheckDate?.length>0){
+        CheckDate[0]?.title.push(homework)
+        updateThings();
+      }else{
+        postThings();
+      }
     }
 
-    const addHomework = async()=>{
+    const updateThings = async()=>{
+      await AsyncStorage.getItem('token').then((value) =>{
+          if(value!==null){
+            token = JSON.parse(value)
+          }
+        })
+      await fetch(Apilink+`/auth/updatenotesonly`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          },
+          body: JSON.stringify({
+            "username": name,
+            "session_notes": "",
+            "things_to_remember": {
+              "title": CheckDate[0]?.title,
+              "date": CurrentDate,
+              "notes":""
+            }
+          })
+        })
+      .then((response)=>{response.json()})
+      .then((response)=>console.log(response)) 
+      setHomework('')
+      ToastAndroid.showWithGravityAndOffset(
+          "Relfect Back is added Go Back and Refresh",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );       
+  } 
+
+    
+   
+
+    const postThings = async()=>{
         await AsyncStorage.getItem('token').then((value) =>{
             if(value!==null){
               token = JSON.parse(value)
@@ -61,7 +107,11 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
             body: JSON.stringify({
               "username": name,
               "session_notes": "",
-              "things_to_remember": reflect
+              "things_to_remember": {
+                "title": [homework],
+                "date": CurrentDate,
+                "notes":""
+              }
             })
           })
         .then((response)=>{response.json()})
@@ -72,7 +122,8 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
             ToastAndroid.BOTTOM,
             25,
             50
-          );       
+          ); 
+        setHomework('')      
     } 
     
   return (
@@ -103,6 +154,7 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
         <View >
         <TextInput 
              mode='outlined'
+             value={homework}
              style={{
                  marginHorizontal:22,
                  height:50,
@@ -115,7 +167,7 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
             onChangeText={(text)=>setHomework(text)}
         />
         {homework.length>0? <TouchableOpacity>
-        <Button style={{backgroundColor:'rgba(0,0,0,0.45)',width:windowWidth/4,margin:10,alignSelf:'center'}} textColor="white" onPress={()=>{addHomework()}}>Add</Button>
+        <Button style={{backgroundColor:'rgba(0,0,0,0.45)',width:windowWidth/4,margin:10,alignSelf:'center'}} textColor="white" onPress={()=>{decisionFunction()}}>Add</Button>
         </TouchableOpacity>:<></>}
        
         </View>
@@ -123,10 +175,13 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
         sessionNotes['things_to_remember']?.map((item)=>(
             <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-                <View style={{}}>
+                <ScrollView style={{}}>
                 <Text style={{marginHorizontal:10,padding:5,marginTop:10,marginBottom:5,fontFamily:'Poppins-Bold',fontSize:13}}>{item.date}</Text>
-                <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
-                </View>                
+                
+                {item.title.map((item)=>(
+                                  <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
+                ))}
+                </ScrollView>                
 
           </LinearGradient>
         )):
@@ -157,7 +212,7 @@ const styles = StyleSheet.create({
     cardcontainer:{
         justifyContent:'space-evenly',
         backgroundColor: '#fff',
-        height:windowHeight/8,
+        height:windowHeight/4,
         marginVertical:5,
         marginHorizontal:22,
         borderRadius: 10,

@@ -47,10 +47,12 @@ const Reflecback = () => {
          sessionNotes?.things_to_remember.map((item)=>(     
           <>  
               <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Bold',fontSize:13}}>{item.date}</Text>
-              <TouchableOpacity onPress={()=>{navigation.navigate('UserUpdateReflectback',{name:item.title,reflectBack:item})}} style={{flexDirection:'row',justifyContent:'space-evenly',alignItems:'center',padding:5}}>
-                <View style={{width:10,height:10,borderRadius:30,backgroundColor:'rgba(0,0,0,0.4)'}}></View>
-                <Text style={{marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
-                <Entypo name='chevron-right' size={15} />
+              <TouchableOpacity onPress={()=>{navigation.navigate('UserUpdateReflectback',{name:item.date,reflectBack:item})}} style={{backgroundColor:'#ffffff',marginHorizontal:20,marginVertical:10,borderRadius:30,elevation:20}}>
+                {item.title.map((item,index)=>(
+                                  <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{index+1} .    {item}</Text>
+                ))}
+
+                
               </TouchableOpacity>
               
             </> )):<></>}              
