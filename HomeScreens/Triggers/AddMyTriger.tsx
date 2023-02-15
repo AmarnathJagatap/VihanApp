@@ -38,7 +38,6 @@ const AddMyTriger = ({navigation}) => {
             })
           })
         .then((response)=>{response.json()})
-        .then((response)=>console.log(response)) 
         ToastAndroid.showWithGravityAndOffset(
             "Trigger Added",
             ToastAndroid.LONG,

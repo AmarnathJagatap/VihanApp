@@ -21,6 +21,7 @@ import AddMyTriger from '../HomeScreens/Triggers/AddMyTriger';
 import UserTaskUpdate from '../HomeScreens/MyHome/UserTaskUpdate';
 import UserUpdateReflectBack from '../HomeScreens/MyHome/UserUpdateReflectBack';
 import CheckHistory from '../HomeScreens/Triggers/CheckHistory';
+import MoodTrackerHistory from '../HomeScreens/Triggers/MoodTrackerHistory';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -253,11 +254,24 @@ export default function HomeScreen({navigation}){
          })}       
       />  
 
-<Stack.Screen
+      <Stack.Screen
         name="Checkhistory"
         component={CheckHistory}
         options={() =>
-         ({ title: "Check History", 
+         ({ title: "Trigger History", 
+          headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
+          headerLeft : props => 
+          <View style={{flexDirection:'row'}}>
+            <MaterialCommunityIcons onPress={()=>navigation.goBack()} name="chevron-left" size={25} style={{marginLeft:10,marginTop:8}}/>
+          </View>
+         })}       
+      />  
+
+    <Stack.Screen
+        name="MoodTrackerHistory"
+        component={MoodTrackerHistory}
+        options={() =>
+         ({ title: "Mood Tracker  History", 
           headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
           headerLeft : props => 
           <View style={{flexDirection:'row'}}>

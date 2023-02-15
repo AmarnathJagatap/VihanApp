@@ -63,7 +63,6 @@ const upDateTrigger = async(item)=>{
     ); 
 } 
 
-console.log(triggers)
 
   return (
     <>
