@@ -14,8 +14,9 @@ let token;
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
-const UserReflecBackDetailScreen = ({route,navigation}) => {
+const CreateReflectback = ({route,navigation}) => {
     const {sessionNotes,name} = route.params;
+    console.log(name)
     const [refreshing, setRefreshing] = React.useState(false);
     const [things, setThings] = useState();
     const [homework, setHomework] = useState('');
@@ -44,50 +45,6 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
 
 
   const CheckDate = things?.filter(object => object.date===CurrentDate)
-
-
-    const decisionFunction = () =>{
-      if(CheckDate?.length>0){
-        updateThings();
-      }else{
-        postThings();
-      }
-    }
-
-    const updateThings = async()=>{
-      await AsyncStorage.getItem('token').then((value) =>{
-          if(value!==null){
-            token = JSON.parse(value)
-          }
-        })
-      await fetch(Apilink+`/auth/updatenotesonly`, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token,
-          },
-          body: JSON.stringify({
-            "username": name,
-            "session_notes": "",
-            "things_to_remember": {
-              "title": homework,
-              "date": CurrentDate,
-              "notes":[]
-            }
-          })
-        })
-      .then((response)=>{response.json()})
-      .then((response)=>console.log(response)) 
-      setHomework('')
-      ToastAndroid.showWithGravityAndOffset(
-          "Relfect Back is added Go Back and Refresh",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );       
-  } 
-
     
    
 
@@ -109,7 +66,7 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
               "things_to_remember": {
                 "title": homework,
                 "date": CurrentDate,
-                "notes":[]
+                "notes":""
               }
             })
           })
@@ -151,44 +108,26 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
                 Add & View Reflect Back of Users
         </Text>
         <View >
-          {CheckDate?.length>0?
-            <></> :
-            <TouchableOpacity onPress={()=>{navigation.navigate('CreateReflectBack',{name: name,sessionNotes: sessionNotes})}}>
-            <LinearGradient
-                  colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
-                    <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Add Reflect Back</Text>
-            </LinearGradient>
-        </TouchableOpacity> }
+       
+        <TextInput 
+        multiline={true}
+             mode='outlined'
+             value={homework}
+             style={{
+                 marginHorizontal:22,
+                 height:windowHeight/2,
+                 backgroundColor:Colors.light.white,
+                 marginVertical:10,
+                 }} 
+            outlineColor={'rgba(0,0,0,0.15)'}
+            activeOutlineColor={'rgba(0,0,0,0.15)'}
+            onChangeText={(text)=>setHomework(text)}
+        />
+        {homework.length>0? <TouchableOpacity>
+        <Button style={{backgroundColor:'rgba(0,0,0,0.45)',width:windowWidth/4,margin:10,alignSelf:'center'}} textColor="white" onPress={()=>{postThings()}}>Add</Button>
+        </TouchableOpacity>:<></>}
        
         </View>
-        {sessionNotes['things_to_remember'].length>0?
-        sessionNotes['things_to_remember']?.map((item)=>(
-          
-            <LinearGradient 
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-                <ScrollView style={{}}>
-                <TouchableOpacity onPress={()=>{navigation.navigate('EditReflectBack',{name:name,sessionNotes:item})}}>
-                <Text style={{marginHorizontal:10,padding:5,marginTop:10,marginBottom:5,fontFamily:'Poppins-Bold',fontSize:13}}>{item.date}</Text>
-                
-                                  <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
-
-
-                </TouchableOpacity>
-
-                </ScrollView>                
-
-          </LinearGradient>
-        )):
-        <LinearGradient
-            colors={['rgba(300, 195, 238, 0.76) @ 8.68%','rgba(300, 195, 238, 0.76) @ 38.89%','rgba(300, 195, 238, 0.76) @ 99.99%','rgba(300, 195, 238, 0.76) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:5}}>
-                <View style={{flexDirection:'row',justifyContent:'space-between',width:windowWidth/3}}>
-                    <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Nothing To Show</Text>
-                    </View>                
-                </View>
-
-          </LinearGradient>
-        }
         
     </ScrollView>
     </KeyboardAvoidingView>    
@@ -196,7 +135,7 @@ const UserReflecBackDetailScreen = ({route,navigation}) => {
   )
 }
 
-export default UserReflecBackDetailScreen
+export default CreateReflectback;
 
 const styles = StyleSheet.create({
     container:{
