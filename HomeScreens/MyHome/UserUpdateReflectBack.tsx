@@ -18,6 +18,7 @@ const UserUpdateReflectBack = ({route,navigation}) => {
     const [Notes, setNotes]= useState('');
     
     const updateNotes = async()=>{
+        reflectBack.notes.push(Notes)
         await AsyncStorage.getItem('token').then((value) =>{
             if(value!==null){
               token = JSON.parse(value)
@@ -34,12 +35,11 @@ const UserUpdateReflectBack = ({route,navigation}) => {
               "things_to_remember":{
                 "title": reflectBack.title,
                 "date": reflectBack.date,
-                "notes":Notes              
+                "notes":reflectBack.notes       
               }
             })
           })
         .then((response)=>{response.json()})
-        .then((response)=>console.log(response)) 
         ToastAndroid.showWithGravityAndOffset(
             "Task Updated go back and Refresh",
             ToastAndroid.LONG,
@@ -71,7 +71,7 @@ const UserUpdateReflectBack = ({route,navigation}) => {
                  backgroundColor:Colors.light.white,
                  marginVertical:10
                  }} 
-            label={reflectBack.notes}
+            label="Add Notes To Reflect Back"
             outlineColor={'rgba(0,0,0,0.55)'}
             activeOutlineColor={'rgba(0,0,0,0.65)'}
             onChangeText={(text)=>setNotes(text)}
@@ -82,7 +82,33 @@ const UserUpdateReflectBack = ({route,navigation}) => {
                       <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Add</Text>
               </LinearGradient>
       </TouchableOpacity>     :<></>}
-       
+
+      <Text>Previous Notes : </Text>
+      {reflectBack?.notes.length>0?
+        reflectBack?.notes.map((item,index)=>(
+            <LinearGradient
+            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
+                <View style={{flexDirection:"row",justifyContent:'space-around'}}>
+                <Text style={{marginHorizontal:10,padding:5,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
+                <TouchableOpacity onPress={()=>{navigation.navigate('EditReflectBackNote',{name:item,reflectBack:reflectBack})}} style={{marginHorizontal:10,padding:5,marginTop:10,marginBottom:5}}>
+                  <FontAwesome  name="edit" size={20}/>  
+
+                </TouchableOpacity>   
+               
+                </View>                
+
+          </LinearGradient>
+        )):
+        <LinearGradient
+            colors={['rgba(300, 195, 238, 0.76) @ 8.68%','rgba(300, 195, 238, 0.76) @ 38.89%','rgba(300, 195, 238, 0.76) @ 99.99%','rgba(300, 195, 238, 0.76) @ 100%']} style={styles.cardcontainer}>
+              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:5}}>
+                <View style={{flexDirection:'row',justifyContent:'space-between',width:windowWidth/3}}>
+                    <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Nothing To Show</Text>
+                    </View>                
+                </View>
+
+          </LinearGradient>
+       }
         </View>        
     </ScrollView>
     </KeyboardAvoidingView>    
