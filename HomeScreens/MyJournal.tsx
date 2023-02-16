@@ -2,7 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, Button } from 'react-native';
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
-import MainComponent from './MyJournal/MainComponent';
+import MainJournal from './MyJournal/MyJournal';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -32,7 +32,7 @@ const MyJournal = () => {
       </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
-    <MainComponent/>
+    <MainJournal/>
 </View>
   );
 };
