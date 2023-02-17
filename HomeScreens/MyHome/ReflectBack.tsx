@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid } from 'react-native'
+import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {Entypo} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,6 +12,16 @@ let token;
 const Reflecback = () => {
   const [sessionNotes, setSessionNotes] = useState(null);
   const navigation = useNavigation();
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      getNotesData();
+    }, 2000);
+  }, []);
 
   
 
@@ -41,7 +51,7 @@ const Reflecback = () => {
 
 
   return (
-    <ScrollView>
+    <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <>   
         {sessionNotes?.things_to_remember.length>0?
          sessionNotes?.things_to_remember.map((item,index)=>(     

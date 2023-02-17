@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid, FlatList, TextInput } from 'react-native'
+import {StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid, FlatList, TextInput, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,6 +20,17 @@ const UsersReflectBack = () => {
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+        getUserNotes();
+      }, 2000);
+    }, []);
+  
     
     const getUserNotes =async()=>{
      await AsyncStorage.getItem('token').then((value) =>{
@@ -92,7 +103,7 @@ const UsersReflectBack = () => {
       );
     };
   return (
-    <ScrollView>
+    <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <View>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>Users Reflect Back</Text>
          
