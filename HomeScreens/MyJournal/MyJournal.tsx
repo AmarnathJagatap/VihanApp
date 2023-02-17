@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, ToastAndroid, Linking, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, ToastAndroid, Linking, Alert, RefreshControl } from 'react-native';
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
@@ -15,6 +15,16 @@ const MainJournal = () => {
   const [myJournal,setMyJounal] = useState();
   const [journalText, setJournalText] = useState('');
   const navigation = useNavigation();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      getmyJournal();
+    }, 2000);
+  }, []);
+  
   const getmyJournal = async()=>{
     await AsyncStorage.getItem('token').then((value) =>{
         if(value!==null){
@@ -51,49 +61,9 @@ const MainJournal = () => {
 
   const CheckDate = myJournal?.my_journey?.filter(object => object.date===CurrentDate)
 
+   
 
-    const decisionFunction = () =>{
-      if(CheckDate?.length>0){
-        CheckDate[0]?.title.push(journalText)
-        updateThings();
-      }else{
-        postThings();
-      }
-    }
-
-    const updateThings = async()=>{
-      await AsyncStorage.getItem('token').then((value) =>{
-          if(value!==null){
-            token = JSON.parse(value)
-          }
-        })
-      await fetch(Apilink+`/auth/updatemyjourney`, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token,
-          },
-          body: JSON.stringify({
-            "my_journey" :{
-              "date":CurrentDate,
-              "title":CheckDate[0]?.title
-            }
-         
-          })
-        })
-      .then((response)=>{response.json()})
-      .then((response)=>console.log(response)) 
-      setJournalText('')
-      ToastAndroid.showWithGravityAndOffset(
-          "Journal Added",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );
-        getmyJournal();    
-  } 
-
+   
   const [docData, setDocData] = useState(null);
   const getDocData = async()=>{
       await AsyncStorage.getItem('token').then((value) =>{
@@ -141,40 +111,9 @@ const MainJournal = () => {
     
    
 
-    const postThings = async()=>{
-        await AsyncStorage.getItem('token').then((value) =>{
-            if(value!==null){
-              token = JSON.parse(value)
-            }
-          })
-        await fetch(Apilink+`/auth/updatenotes`, {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': token,
-            },
-            body: JSON.stringify({
-              "my_journey" :{
-                "date":CurrentDate,
-                "title":[journalText]
-              }
-           
-            })
-          })
-        .then((response)=>{response.json()})
-        .then((response)=>console.log(response)) 
-        ToastAndroid.showWithGravityAndOffset(
-            "Journal Added",
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50
-          ); 
-        setJournalText('') 
-        getmyJournal();      
-    } 
+   
   return (
-    <ScrollView>
+    <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
     <View>
       <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Select Date</Text>
       <View style={{flexDirection:'row',justifyContent:'space-around'}}>
@@ -184,8 +123,18 @@ const MainJournal = () => {
          </TouchableOpacity>
       </View>               
     </View>
+    {
+      CheckDate?.length>0?<></>:
+      <TouchableOpacity onPress={()=>{navigation.navigate('CreateJournal')}}>
+              <LinearGradient
+                    colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{width:windowWidth-30,height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
+                      <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Add Journal</Text>
+              </LinearGradient>
+    </TouchableOpacity> 
+    }
+    
 
-    <View>
+    {/*<View>
       <View style={{}}>
       <TextInput 
             value={journalText}
@@ -206,7 +155,7 @@ const MainJournal = () => {
         </TouchableOpacity>:<></>}
          
       </View>               
-    </View>
+      </View>*/}
 
     <View>
       <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Recents</Text>

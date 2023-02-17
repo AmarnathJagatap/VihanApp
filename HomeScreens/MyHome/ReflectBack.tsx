@@ -41,25 +41,23 @@ const Reflecback = () => {
 
 
   return (
-    <View>
-        <View>   
+    <ScrollView>
+        <>   
         {sessionNotes?.things_to_remember.length>0?
-         sessionNotes?.things_to_remember.map((item)=>(     
-          <>  
+         sessionNotes?.things_to_remember.map((item,index)=>(     
+          <ScrollView style={styles.container}>  
               <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Bold',fontSize:13}}>{item.date}</Text>
-              <TouchableOpacity onPress={()=>{navigation.navigate('UserUpdateReflectback',{name:item.date,reflectBack:item})}} style={{backgroundColor:'#ffffff',marginHorizontal:20,marginVertical:10,borderRadius:30,elevation:20}}>
-                {item.title.map((item,index)=>(
-                                  <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{index+1} .    {item}</Text>
-                ))}
+              <TouchableOpacity onPress={()=>{navigation.navigate('UserUpdateReflectback',{name:item.date,reflectBack:item})}}>
+                                  <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
 
                 
               </TouchableOpacity>
               
-            </> )):<></>}              
+            </ScrollView> )):<></>}            
          
-        </View>
+        </>
 
-    </View>
+    </ScrollView>
   )
 }
 
@@ -68,9 +66,8 @@ export default Reflecback
 const styles = StyleSheet.create({
     container: {
       backgroundColor: '#fff',
-      height:windowHeight/3.8,
-      padding: 30,
-      paddingTop:50,
+      height:windowHeight/3,
+      margin:10,
       borderRadius: 30,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 6 },

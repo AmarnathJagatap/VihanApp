@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 let token;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+let day, year, month
 const MoodTracker = () => {
   const [value,setvalue] = useState(0);
   const [mood ,setMood]=useState();
@@ -17,11 +18,12 @@ const MoodTracker = () => {
   const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
-
-    const d = new Date();
-    let day = d.getDate();
-    let year = d.getFullYear();
-    let month = monthNames[d.getMonth()];
+    
+      const d = new Date();
+      let day = d.getDate();
+      let year = d.getFullYear();
+      let month = monthNames[d.getMonth()];
+   
     
   const CurrentDate = `${day}th ${month} ${year}`
   useEffect(()=>{
@@ -50,7 +52,7 @@ const MoodTracker = () => {
 
     const decisionFunction = () =>{
       const CheckDate = mood?.mood_tracker.filter(object => object.date===CurrentDate)
-
+      console.log(CheckDate)
       if(CheckDate?.length>0){
         CheckDate[0]?.mood.push(value)
         updateMoodTracker();

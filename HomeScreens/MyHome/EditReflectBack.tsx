@@ -16,7 +16,7 @@ const wait = (timeout) => {
   }
 const EditReflectback = ({route,navigation}) => {
     const {sessionNotes,name} = route.params;
-    console.log(name)
+    console.log(name);
     const [refreshing, setRefreshing] = React.useState(false);
     const [things, setThings] = useState();
     const [homework, setHomework] = useState('');
@@ -29,12 +29,7 @@ const EditReflectback = ({route,navigation}) => {
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
       wait(2000).then(() => setRefreshing(false));
-    }, []);
-
-
-
-
-    
+    }, []);  
    
 
     const updateThings = async()=>{

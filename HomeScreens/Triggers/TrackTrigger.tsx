@@ -5,6 +5,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { LinearGradient } from 'expo-linear-gradient';
 import MoodTracker from './MoodTracker';
 import MyTrigger from './MyTrigger';
+import { AuthContext } from '../../Context/AuthContext';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -12,6 +13,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Card = () => {
+  const {userData} = React.useContext(AuthContext);
   return (
       <LinearGradient
     
@@ -20,7 +22,7 @@ const Card = () => {
   <View style={styles.header}>
       <View style={styles.propicrow}>
       <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
-      <Text style={styles.name}>Hi Dhruv</Text>
+      <Text style={styles.name}>{userData?.user_info?.username}</Text>
       </View>
       <View style={styles.icons}>
         

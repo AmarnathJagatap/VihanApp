@@ -17,8 +17,42 @@ const wait = (timeout) => {
   }
 const SpecificJournalDetail = ({route,navigation}) => {
     const {myJournal,name} = route.params;
+    const [journalText, setJournalText] = useState('');
 
- 
+    useEffect(()=>{
+      setJournalText(myJournal.title)
+    },[])
+
+    const updateThings = async()=>{
+      await AsyncStorage.getItem('token').then((value) =>{
+          if(value!==null){
+            token = JSON.parse(value)
+          }
+        })
+      await fetch(Apilink+`/auth/updatemyjourney`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          },
+          body: JSON.stringify({
+            "my_journey" :{
+              "date":myJournal.date,
+              "title":journalText
+            }
+         
+          })
+        })
+      .then((response)=>{response.json()})
+      .then((response)=>console.log(response?.my_journey)) 
+      ToastAndroid.showWithGravityAndOffset(
+          "Journal Added",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );   
+  } 
     
   return (
    <ScrollView 
@@ -43,31 +77,28 @@ const SpecificJournalDetail = ({route,navigation}) => {
         
        
         </View>
-        {myJournal['title']?
-        myJournal['title']?.map((item,index)=>(
-            <LinearGradient
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-                <View style={{flexDirection:"row",justifyContent:'space-around'}}>
-                <Text style={{marginHorizontal:10,padding:5,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item}</Text>
-                <TouchableOpacity onPress={()=>{navigation.navigate('EditJournalNote',{name:item,myJournal:myJournal})}} style={{marginHorizontal:10,padding:5,marginTop:10,marginBottom:5}}>
-                  <FontAwesome  name="edit" size={20}/>  
-
-                </TouchableOpacity>   
-               
-                </View>                
-
-          </LinearGradient>
-        )):
-        <LinearGradient
-            colors={['rgba(300, 195, 238, 0.76) @ 8.68%','rgba(300, 195, 238, 0.76) @ 38.89%','rgba(300, 195, 238, 0.76) @ 99.99%','rgba(300, 195, 238, 0.76) @ 100%']} style={styles.cardcontainer}>
-              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:5}}>
-                <View style={{flexDirection:'row',justifyContent:'space-between',width:windowWidth/3}}>
-                    <Text style={{marginHorizontal:10,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>Nothing To Show</Text>
-                    </View>                
-                </View>
-
-          </LinearGradient>
-       }
+        <View>
+       <View style={{}}>
+      <TextInput 
+      multiline={true}
+            value={journalText}
+             mode='outlined'
+             style={{
+                 marginHorizontal:22,
+                 height:windowHeight/3,
+                 backgroundColor:Colors.light.white,
+                 marginVertical:10
+                 }} 
+            outlineColor={'rgba(0,0,0,0.55)'}
+            activeOutlineColor={'rgba(0,0,0,0.65)'}
+            onChangeText={(text)=>setJournalText(text)}
+        />
+      {journalText.length>0? <TouchableOpacity>
+        <Button style={{backgroundColor:'rgba(0,0,0,0.45)',width:windowWidth/4,margin:10,alignSelf:'center'}} textColor="white" onPress={()=>{updateThings()}}>Add</Button>
+        </TouchableOpacity>:<></>}
+         
+      </View>               
+      </View>
         
     </ScrollView>
     </KeyboardAvoidingView>    

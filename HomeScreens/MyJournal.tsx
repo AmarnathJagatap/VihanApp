@@ -3,10 +3,12 @@ import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Platform, Button } from 'react-native';
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
 import MainJournal from './MyJournal/MyJournal';
+import { AuthContext } from '../Context/AuthContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const MyJournal = () => {
+  const {userData} = React.useContext(AuthContext);
   return (
     <View>
       
@@ -17,7 +19,7 @@ const MyJournal = () => {
       <View style={styles.header}>
           <View style={styles.propicrow}>
           <Image source={require('../assets/propic.jpg')} style={styles.profilePic} />
-          <Text style={styles.name}>Hi Dhruv</Text>
+          <Text style={styles.name}>{userData?.user_info?.username}</Text>
           </View>
           <View style={styles.icons}>
             
