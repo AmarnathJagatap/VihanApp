@@ -1,5 +1,5 @@
 import React, { useEffect,useState, useContext} from 'react';
-import { StyleSheet, View,Image,ActivityIndicator,Text } from 'react-native';
+import { StyleSheet, View,ImageBackground,ActivityIndicator,Text } from 'react-native';
 import { NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -41,17 +41,15 @@ const Authandler=()=> {
     
   const AnimatingScreen = () => {
     return(
-      <View style={styles.container}>
-         <View>
-         <Text style={{fontSize:40,textAlign:'center'}}>Vihaan</Text>
-        </View>  
+      <ImageBackground source={require('../assets/splash.png')} style={styles.container}>
+       
         <ActivityIndicator
-          color={Colors.light.tabIconSelected}
+          color={Colors.light.white}
           size="large"
           style={styles.activityIndicator}
         />
       
-      </View>
+      </ImageBackground>
     )
   }
 
