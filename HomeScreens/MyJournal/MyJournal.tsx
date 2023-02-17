@@ -5,7 +5,7 @@ import { Entypo,FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
 import MyJournal from '../MyJournal';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { TextInput,Button } from 'react-native-paper';
 import Colors from '../../Constants/Colors';
 let token;
@@ -16,7 +16,14 @@ const MainJournal = () => {
   const [journalText, setJournalText] = useState('');
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = React.useState(false);
+  
 
+  const isFocused = useIsFocused();
+ 
+  useEffect(() => {
+    getmyJournal();
+  }, [isFocused]);
+  
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {

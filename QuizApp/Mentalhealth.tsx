@@ -23,7 +23,7 @@ const Mentalhealth = ({navigation}) => {
               token = JSON.parse(value)
             }
           })
-       await fetch(Apilink+ `auth/updatementalscore`, {
+       await fetch(Apilink+ `/auth/updatementalscore`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

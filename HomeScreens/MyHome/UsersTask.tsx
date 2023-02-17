@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
 import Colors from '../../Constants/Colors';
 import { Avatar } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-virtualized-view'
 
@@ -47,6 +47,13 @@ const UserTasks = () => {
     useEffect(() => {
       getUserNotes();   
     }, []);
+
+    
+    const isFocused = useIsFocused();
+ 
+  useEffect(() => {
+    getUserNotes();
+  }, [isFocused]);
   
     const searchFilterFunction = (text) => {
       // Check if searched text is not blank

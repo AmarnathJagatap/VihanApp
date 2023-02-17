@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
 import {Entypo} from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -36,6 +36,13 @@ const MyTask = () => {
       useEffect(()=>{
           getNotesData();
       },[])
+
+      
+  const isFocused = useIsFocused();
+ 
+  useEffect(() => {
+    getNotesData();
+  }, [isFocused]);
 
   return (
     <View>

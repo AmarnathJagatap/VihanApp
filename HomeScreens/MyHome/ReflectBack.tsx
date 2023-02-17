@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {Entypo} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -46,6 +46,13 @@ const Reflecback = () => {
       useEffect(()=>{
           getNotesData();
       },[])
+
+          
+  const isFocused = useIsFocused();
+ 
+  useEffect(() => {
+    getNotesData();
+  }, [isFocused]);
 
  
 

@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
 import { Apilink } from '../../Constants/Apilink';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -13,8 +13,14 @@ const MainComponent = () => {
   const [triggers,setTriggers] = useState({});
   const navigation = useNavigation();
   useEffect(()=>{
-    getTriggers()
+    getTriggers();
   },[])
+
+  const isFocused = useIsFocused();
+ 
+  useEffect(() => {
+    getTriggers();
+  }, [isFocused]);
   const getTriggers = async()=>{
     await AsyncStorage.getItem('token').then((value) =>{
         if(value!==null){

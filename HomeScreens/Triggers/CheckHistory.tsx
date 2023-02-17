@@ -77,12 +77,7 @@ const CheckHistory = () => {
          }):<></>}  
                               
     </View>
-    <TouchableOpacity>
-              <LinearGradient
-                    colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{width:windowWidth-30,height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center',margin:15}}>
-                      <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Check History</Text>
-              </LinearGradient>
-      </TouchableOpacity>     
+   
     
 </ScrollView>
 </>
