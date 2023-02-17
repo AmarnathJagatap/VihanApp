@@ -26,6 +26,9 @@ import SpecificJournalDetail from '../HomeScreens/MyJournal/SpecificJournalDetai
 import CreateReflectback from '../HomeScreens/MyHome/CreateReflectBack';
 import EditReflectback from '../HomeScreens/MyHome/EditReflectBack';
 import CreateJournal from '../HomeScreens/MyJournal/CreateJournal';
+import Programs from '../HomeScreens/MySelfCare/Programs';
+import Lessons from '../HomeScreens/MySelfCare/Lessons';
+import Articles from '../HomeScreens/MySelfCare/Articles';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -348,10 +351,26 @@ export default function HomeScreen({navigation}){
          })}       
       />  
 
-
-    
+    <Stack.Screen
+        name="Programs"
+        component={Programs}
+        options={{headerShown: false}}
      
+      /> 
 
+     <Stack.Screen
+        name="Lessons"
+        component={Lessons}
+        options={{headerShown: false}}
+     
+      /> 
+
+      <Stack.Screen
+        name="Articles"
+        component={Articles}
+        options={{headerShown: false}}
+     
+      /> 
     </Stack.Navigator>
   )
 }

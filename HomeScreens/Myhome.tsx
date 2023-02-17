@@ -6,12 +6,13 @@ import MyTask from './MyHome/MyTask';
 import Reflecback from './MyHome/ReflectBack';
 import MainHome from './MyHome/MainHome';
 import { AuthContext } from '../Context/AuthContext';
-import MySelfCare from './MySelfCare/MySelfCare';
+import Programs from './MySelfCare/Programs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../Constants/Apilink';
 import { removeToken } from '../Services/AsyncStorageService';
 import UserTasks from './MyHome/UsersTask';
 import UsersReflectBack from './MyHome/UsersReflectback';
+import MySelfMain from './MySelfCare/MySelfMain';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -57,8 +58,7 @@ const Myhome = ({navigation}) => {
           <Text style={styles.name}>Hi {userData?.user_info?.username}</Text>
           </View>
           <View style={styles.icons}>
-            <Image source={require('../assets/brainstromskill.png')} style={styles.icon} />
-            <Image source={require('../assets/sleep.png')} style={styles.icon} />
+            
           </View>
       </View>
       <TouchableOpacity onPress={()=>{homeScreenItem==="Home"?setHomeScreenItem("My Self Care"):setHomeScreenItem(homeScreenItem)}}>
@@ -75,7 +75,7 @@ const Myhome = ({navigation}) => {
     {homeScreenItem==="Users TASK"?<UserTasks/>:<></>}
     {homeScreenItem==="Reflect Back"?<Reflecback/>:<></>}
     {homeScreenItem==="Users Reflect Back"?<UsersReflectBack/>:<></>}
-    {homeScreenItem==="My Self Care"?<MySelfCare/>:<></>}
+    {homeScreenItem==="My Self Care"?<MySelfMain/>:<></>}
     </View>
   );
 };

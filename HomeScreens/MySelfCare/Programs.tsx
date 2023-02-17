@@ -6,9 +6,30 @@ import { AuthContext } from '../../Context/AuthContext';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const MainHome = () => {
-  const {setHomeScreenItem} = useContext(AuthContext)
+const Programs = () => {
+  const {userData} = useContext(AuthContext)
   return (
+    <>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
+      <View style={styles.header}>
+          <View style={styles.propicrow}>
+          <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
+          <Text style={styles.name}>Hi {userData?.user_info?.username}</Text>
+          </View>
+          <View style={styles.icons}>
+            
+          </View>
+      </View>
+      <TouchableOpacity>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
+                  <Text style={styles.buttonText}>Programs</Text>
+      </LinearGradient>
+      </TouchableOpacity>
+    </LinearGradient>
     <ScrollView> 
         <View>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Depression Program</Text>   
@@ -51,10 +72,11 @@ const MainHome = () => {
        
 
     </ScrollView>
+    </>
   )
 }
 
-export default MainHome
+export default Programs
 
 const styles = StyleSheet.create({
     container: {
