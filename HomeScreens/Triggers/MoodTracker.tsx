@@ -8,7 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 let token;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-let day, year, month
 const MoodTracker = () => {
   const [value,setvalue] = useState(0);
   const [mood ,setMood]=useState();
@@ -47,15 +46,22 @@ const MoodTracker = () => {
     .then((response)=>setMood(response?.mood_tracker)) 
 } 
 
-    const CheckDate = mood?.mood_tracker.filter(object => object.date===CurrentDate)
-
-
     const decisionFunction = () =>{
+      getmoodtracker();
+      const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    
+      const d = new Date();
+      let day = d.getDate();
+      let year = d.getFullYear();
+      let month = monthNames[d.getMonth()];
+      const CurrentDate = `${day}th ${month} ${year}`
+      
       const CheckDate = mood?.mood_tracker.filter(object => object.date===CurrentDate)
-      console.log(CheckDate)
       if(CheckDate?.length>0){
-        CheckDate[0]?.mood.push(value)
-        updateMoodTracker();
+        CheckDate[0]?.mood.push(Math.floor(value))
+        updateMoodTracker(CheckDate);
       }else{
         postMoodTracker();
       }
@@ -80,7 +86,7 @@ const postMoodTracker = async()=>{
       body: JSON.stringify({
         "mood_tracker":{
           "date" : CurrentDate,
-          "mood" : [value]
+          "mood" : [Math.floor(value)]
          }
       })
     })
@@ -94,7 +100,7 @@ const postMoodTracker = async()=>{
     ); 
 } 
 
-const updateMoodTracker = async()=>{
+const updateMoodTracker = async(CheckDate)=>{
   await AsyncStorage.getItem('token').then((value) =>{
       if(value!==null){
         token = JSON.parse(value)
@@ -130,17 +136,17 @@ const updateMoodTracker = async()=>{
 
     <View>
       <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-      <Image source={require('../../assets/very-happy.png')} style={{width:value<2 && value>0?60:40,marginHorizontal:10,height:value<1.5 && value>0?60:40}}/>
-      <Image source={require('../../assets/happy.png')} style={{width:value<4 && value>2.2?60:40,marginHorizontal:10,height:value<4 && value>1.5?60:40}}/>
-      <Image source={require('../../assets/emoji.png')} style={{width:value<6 && value>4?60:40,marginHorizontal:10,height:value<6 && value>4?60:40}}/>
-      <Image source={require('../../assets/sad.png')} style={{width:value<8 && value>6?60:40,marginHorizontal:10,height:value<8 && value>6?60:40}}/>
-      <Image source={require('../../assets/angry.png')} style={{width:value<10 && value>8?60:40,marginHorizontal:10,height:value<10 && value>8?60:40}}/>
+      <Image source={require('../../assets/very-happy.png')} style={{width:value<1 && value>=0?60:40,marginHorizontal:10,height:value<1 && value>=0?60:40}}/>
+      <Image source={require('../../assets/happy.png')} style={{width:value<2 && value>=1?60:40,marginHorizontal:10,height:value<2&& value>=1?60:40}}/>
+      <Image source={require('../../assets/emoji.png')} style={{width:value<3 && value>=2?60:40,marginHorizontal:10,height:value<3 && value>=2?60:40}}/>
+      <Image source={require('../../assets/sad.png')} style={{width:value<4 && value>=3?60:40,marginHorizontal:10,height:value<4 && value>=3?60:40}}/>
+      <Image source={require('../../assets/angry.png')} style={{width:value<=5 && value>=4?60:40,marginHorizontal:10,height:value<=5 && value>=4?60:40}}/>
       </View>
       <Slider
         style={{width: windowWidth, height: 50}}
         onValueChange={(e)=>{setvalue(e), setShowSubmit(true)}}
         minimumValue={0}
-        maximumValue={10}
+        maximumValue={5}
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#000000"
         thumbTintColor="gray"
