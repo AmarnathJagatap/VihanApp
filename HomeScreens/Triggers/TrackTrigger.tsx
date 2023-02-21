@@ -7,6 +7,7 @@ import MoodTracker from './MoodTracker';
 import MyTrigger from './MyTrigger';
 import { AuthContext } from '../../Context/AuthContext';
 import UserMoodScreen from './UserMoodScreen';
+import UserTrigger from './UserTrigger';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -58,7 +59,7 @@ const App = () => {
         }}
       >
         <Tab.Screen name="Mood Tracker" component={userData?.user_info?.role==="doctor"?UserMoodScreen:MoodTracker} />
-        <Tab.Screen name="MY Trigger" component={MyTrigger} />
+        <Tab.Screen name="MY Trigger" component={userData?.user_info?.role==="doctor"?UserTrigger:MyTrigger} />
       </Tab.Navigator>
     </View>
   );
