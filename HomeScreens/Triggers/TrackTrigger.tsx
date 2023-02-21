@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import MoodTracker from './MoodTracker';
 import MyTrigger from './MyTrigger';
 import { AuthContext } from '../../Context/AuthContext';
+import UserMoodScreen from './UserMoodScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -43,6 +44,7 @@ const Card = () => {
 
 
 const App = () => {
+  const {userData} = React.useContext(AuthContext);
   return (
     <View style={styles.container}>
       <Card />
@@ -55,7 +57,7 @@ const App = () => {
           style: { backgroundColor: '#FFFFFF' },
         }}
       >
-        <Tab.Screen name="Mood Tracker" component={MoodTracker} />
+        <Tab.Screen name="Mood Tracker" component={userData?.user_info?.role==="doctor"?UserMoodScreen:MoodTracker} />
         <Tab.Screen name="MY Trigger" component={MyTrigger} />
       </Tab.Navigator>
     </View>

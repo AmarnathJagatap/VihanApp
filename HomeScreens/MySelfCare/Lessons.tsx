@@ -30,6 +30,7 @@ const Lessons = () => {
       </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
+    <ScrollView>
     <View>
     <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontSize:17}}>Introduction</Text>
     <View style={{flexDirection:'row'}}>
@@ -69,7 +70,92 @@ const Lessons = () => {
         </LinearGradient> 
     </View>  
     </View>
+    <View>
+    <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontSize:17}}>Thought Tools</Text>
+    <View style={{flexDirection:'row'}}>
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/ThoughtTools.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, paddingBottom:10, color:"#000",alignSelf:'center',textAlign:'center',marginVertical:5}}>Challenge Automatic Thought</Text>    
+              </TouchableOpacity> 
+        </LinearGradient>   
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/prediction.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, color:"#000",alignSelf:'center',marginVertical:5}}>Prediction</Text>    
+              </TouchableOpacity>                                
+                                      
+        </LinearGradient> 
+    </View>  
     </View>
+    <View>
+    <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontSize:17}}>Goals, Values and Actions</Text>
+    <View style={{flexDirection:'row'}}>
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/GoalSetting.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, color:"#000",alignSelf:'center',textAlign:'center',marginVertical:5}}>Goal Setting</Text>    
+              </TouchableOpacity> 
+        </LinearGradient>   
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/smartgoal.jpg')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, color:"#000",alignSelf:'center',marginVertical:5}}>Smart Goal Building</Text>    
+              </TouchableOpacity>                                
+                                      
+        </LinearGradient> 
+    </View>  
+    <View style={{flexDirection:'row',marginTop:20}}>
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/assesment.jpg')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, color:"#000",alignSelf:'center',textAlign:'center',marginVertical:5}}>Value Assesment</Text>    
+              </TouchableOpacity> 
+        </LinearGradient>   
+       
+    </View>  
+    
+    </View>
+
+    <View>
+    <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontSize:17}}>Mindfullness Tools</Text>
+    <View style={{flexDirection:'row'}}>
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/gratitude.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, color:"#000",alignSelf:'center',textAlign:'center',marginVertical:5}}>Gratitude Check In</Text>    
+              </TouchableOpacity> 
+        </LinearGradient>   
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/reflection.jpg')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, color:"#000",alignSelf:'center',marginVertical:5}}>Reflection</Text>    
+              </TouchableOpacity>                                
+                                      
+        </LinearGradient> 
+    </View>  
+    <View style={{flexDirection:'row',marginTop:20}}>
+        <LinearGradient
+          colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
+              <Image source={require('../../assets/breathing.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
+              <TouchableOpacity onPress={()=>{}}>
+              <Text style={{ fontSize: 14, color:"#000",alignSelf:'center',textAlign:'center',marginVertical:5}}>Breathing Excercise</Text>    
+              </TouchableOpacity> 
+        </LinearGradient>   
+       
+    </View>  
+    
+    </View>
+    </View>
+    </ScrollView>
+
 
     </>
   )

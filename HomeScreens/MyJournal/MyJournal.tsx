@@ -67,64 +67,15 @@ const MainJournal = () => {
 
 
   const CheckDate = myJournal?.my_journey?.filter(object => object.date===CurrentDate)
-
-   
-
-   
-  const [docData, setDocData] = useState(null);
-  const getDocData = async()=>{
-      await AsyncStorage.getItem('token').then((value) =>{
-          if(value!==null){
-            token = JSON.parse(value)
-          }
-        })
-      await fetch(Apilink+`/auth/getdocdata`, {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token,
-          }
-        })
-      .then((response)=>response.json())
-      .then((response)=>setDocData(response))
-
-  }
-  useEffect(()=>{
-      getDocData();
-  },[])
-  
-
-  const supportedURL = docData?.doctor_info?.calendly_link;
-  
-  const OpenURLButton = ({ url, children }) => {
-      const handlePress = useCallback(async () => {
-      // Checking if the link is supported for links with custom URL scheme.
-      const supported = await Linking.canOpenURL(url);
-  
-      if (supported) {
-          // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-          // by some browser in the mobile
-          await Linking.openURL(url);
-      } else {
-          Alert.alert(`Don't know how to open this URL: ${url}`);
-      }
-      }, [url]);
-  
-      return <TouchableOpacity onPress={handlePress} style={styles.calendarcontainer}>
-      <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.40)",fontFamily:'Poppins-Regular',}}>Calender</Text>                                
-    </TouchableOpacity>;
-  };
-
-    
-   
-
    
   return (
     <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
     <View>
       <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Select Date</Text>
       <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-        <OpenURLButton url={supportedURL} children={"Schedule Session"}/>
+      <TouchableOpacity  style={styles.calendarcontainer}>
+      <Text style={{ fontSize: 15,color:"rgba(0, 0, 0, 0.40)",fontFamily:'Poppins-Regular',}}>Calender</Text>                                
+    </TouchableOpacity>
          <TouchableOpacity>
          <FontAwesome name="filter" size={35} color={'rgba(0, 0, 0, 0.40)'} style={{justifyContent:'center',alignItems:'center',marginVertical:8,marginRight:8}}/>
          </TouchableOpacity>

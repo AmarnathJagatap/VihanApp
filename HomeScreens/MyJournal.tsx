@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView
 import { Entypo,FontAwesome } from '@expo/vector-icons'; 
 import MainJournal from './MyJournal/MyJournal';
 import { AuthContext } from '../Context/AuthContext';
+import UserJournal from './MyJournal/UserJournal';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -34,7 +35,7 @@ const MyJournal = () => {
       </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
-    <MainJournal/>
+    {userData?.user_info?.role==="doctor"?<UserJournal/>:<MainJournal/>}
 </View>
   );
 };
