@@ -1,15 +1,48 @@
-import { StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ImageBackground } from 'react-native'
-import React, { useContext } from 'react'
+import { StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ImageBackground, ScrollView } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AuthContext } from '../../Context/AuthContext'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Apilink } from '../../Constants/Apilink';
+import { useNavigation } from '@react-navigation/native';
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
+let token;
 const Articles = () => {
     const {userData} = useContext(AuthContext);
+    const [Articles, setArticles] = useState();
+
+    const navigation = useNavigation();
+
+    const getArticles =async()=>{
+      await AsyncStorage.getItem('token').then((value) =>{
+         if(value!==null){
+           token = JSON.parse(value)
+         }
+       })
+       fetch(Apilink+`/blogs/getallblogdata`, {
+         method: "GET",
+         headers: {
+             'Content-Type' : 'application/json',
+             'Authorization' : token,
+         }
+         })
+         .then((response)=>response.json())
+         .then((responseJson)=>{
+           
+           setArticles(responseJson)
+         }).catch((error)=>{
+           
+         })
+   
+     }
+   
+     useEffect(() => {
+      getArticles();   
+     }, []);
   return (
     <View>
       <LinearGradient
@@ -78,52 +111,26 @@ const Articles = () => {
     </TouchableOpacity>  
     </View>
 
+    <ScrollView>
     <View>
-          <ImageBackground borderRadius={30} source={require('../../assets/Article.png')} style={{height:windowHeight/4,marginHorizontal:20,justifyContent:'space-evenly'}}>
-            <View style={{flex:1,alignItems:'flex-start',position:'absolute',right:10,top:20}}>
-                <Text style={{fontSize:20,color:'#ffffff'}}>
-                    What Causes
-                </Text>
-              
-                <Text style={{fontSize:20,color:'#ff0000',alignSelf:'center'}}>
-                    Bipolar
-                </Text>
-                <Text style={{fontSize:20,color:'#ffffff',alignSelf:'center'}}>
-                    Disorder 
-                </Text>
-            </View>    
-            <View style={{position:'absolute',bottom:20,right:10,justifyContent:"center",borderColor:'#ffffff',borderWidth:2,width:windowWidth/3.4,height:windowHeight/18,borderRadius:20,alignItems:'center'}}>
-                <Text style={{fontSize:14,color:'#ffffff'}}>Read More</Text>
-            </View>       
-          </ImageBackground>     
-        </View>
-
-        <View>
-          <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Recent Publications</Text>
-          <LinearGradient
-            colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>
-                <Image source={require('../../assets/cardImage.png')} style={{borderRadius:30,width:windowWidth-20,height:windowHeight/5.8}}/>
-                <View style={styles.meetingrow}>
-                    <View style={styles.propicrow}>
-                        <Image source={require('../../assets/propic2.jpg')} style={styles.profilePicmeet} />
-                        <View>
-                          <Text style={styles.meetingrowname}>Mr. Someone</Text>
-                          <Text style={styles.meetingrowtime}>30th Friday</Text>
-                        </View>
-                    </View>
-                    <View>
-                      <TouchableOpacity>
-                      <LinearGradient
-                            colors={['rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)','rgba(0, 0, 0, 0.40)']} style={{width:windowWidth/3,height:windowHeight/20,borderRadius:10,alignItems:'center',justifyContent:'center'}}>
-                              <Text style={{ fontSize: 12,color:"#ffffff",fontFamily:'Poppins-Regular'}}>Read More</Text>
-                      </LinearGradient>
-                      </TouchableOpacity>
-                    </View>
-          </View>
-        </LinearGradient>      
-        </View>
-
+      {Articles?.length>0?
+      Articles.map((item)=>(
+        <ImageBackground borderRadius={30} source={require('../../assets/Article.png')} style={{height:windowHeight/4,marginHorizontal:20,justifyContent:'space-evenly'}}>
+        <View style={{flex:1,alignItems:'flex-start',position:'absolute',right:10,top:20}}>
+            <Text style={{fontSize:20,color:'#ffffff'}}>
+                {item.title}            </Text>
+          
+        </View>    
+        <TouchableOpacity onPress={()=>{navigation.navigate('ArticalDetail',{name:item.title, ArticleDetail: item})}} style={{position:'absolute',bottom:20,right:10,justifyContent:"center",borderColor:'#ffffff',borderWidth:2,width:windowWidth/3.4,height:windowHeight/18,borderRadius:20,alignItems:'center'}}>
+            <Text style={{fontSize:14,color:'#ffffff'}}>Read More</Text>
+        </TouchableOpacity>       
+      </ImageBackground>  
+      )):<></>}
+             
+      </View>
+      </ScrollView>
     </View>
+
   )
 }
 

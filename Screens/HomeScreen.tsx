@@ -32,6 +32,7 @@ import Articles from '../HomeScreens/MySelfCare/Articles';
 import UsersJournalDetailScreen from '../HomeScreens/MyJournal/UsersJournalDetailScreen';
 import UserMoodDetailScreen from '../HomeScreens/Triggers/UserMoodDetailScreen';
 import UserTriggerDetailScreen from '../HomeScreens/Triggers/UserTriggerDetailScreen';
+import ArticleDetail from '../HomeScreens/MySelfCare/ArticleDetail';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -394,6 +395,24 @@ export default function HomeScreen({navigation}){
          </View>
         })}        
       />  
+
+<Stack.Screen
+        name="ArticalDetail"
+        component={ArticleDetail}
+        options={({ route }) =>
+        ({ title: route.params.name, 
+         headerTitleStyle:{fontFamily:'serif', fontSize:18, fontWeight:'bold'},
+         headerLeft : props => 
+         <View style={{flexDirection:'row'}}>
+           <MaterialCommunityIcons onPress={()=>navigation.goBack()} name="chevron-left" size={25} style={{marginLeft:10,marginTop:8}}/>
+
+           <Image
+         source={require('../assets/man.png')}
+         style={{ width: 40, height: 40, borderRadius: 40/2, marginLeft : 15 }} />
+         </View>
+        })}        
+      />  
+
 
 <Stack.Screen
         name="CreateJournal"
