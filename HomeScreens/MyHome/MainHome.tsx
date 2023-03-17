@@ -10,7 +10,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let token
 const MainHome = () => {
-  const {setHomeScreenItem,userData} = useContext(AuthContext)
+  const {userData} = useContext(AuthContext)
   const navigation = useNavigation();
 
   const [docData, setDocData] = useState(null);
@@ -94,7 +94,7 @@ const MainHome = () => {
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Past Sessions</Text>
           {userData?.user_info?.role === "doctor"?
             <View style={{flexDirection:'row'}}>
-              <TouchableOpacity onPress={()=>{setHomeScreenItem('Users TASK')}}>
+              <TouchableOpacity onPress={()=>{navigation.navigate('UsersTasks')}}>
                 <LinearGradient
                   colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
                       <Image source={require('../../assets/pastsession1.png')} style={{borderRadius:20,width:windowWidth/2.10,height:windowHeight/7}}/>
@@ -102,7 +102,7 @@ const MainHome = () => {
                       <Text style={{ fontSize: 14, color:"#000", fontFamily:'Poppins-Regular',alignSelf:'center',marginVertical:5}}>Users Task</Text>    
                 </LinearGradient>  
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={()=>{setHomeScreenItem('Users Reflect Back')}}>
+                <TouchableOpacity onPress={()=>{navigation.navigate('UsersReflectBack')}}>
 
                 <LinearGradient
                   colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
@@ -114,7 +114,7 @@ const MainHome = () => {
 
             </View> : 
               <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity onPress={()=>{setHomeScreenItem('TASK')}}>
+                                    <TouchableOpacity onPress={()=>{navigation.navigate('MyTask')}}>
 
               <LinearGradient
                 colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>
@@ -122,7 +122,7 @@ const MainHome = () => {
                     <Text style={{ fontSize: 14, color:"#000", fontFamily:'Poppins-Regular',alignSelf:'center',marginVertical:5}}>My Task</Text>    
               </LinearGradient>   
               </TouchableOpacity> 
-              <TouchableOpacity onPress={()=>{setHomeScreenItem('Reflect Back')}}>
+              <TouchableOpacity onPress={()=>{navigation.navigate('ReflectBack')}}>
 
               <LinearGradient
                 colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardImagecontainer}>

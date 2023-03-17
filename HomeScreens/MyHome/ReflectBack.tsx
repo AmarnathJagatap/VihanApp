@@ -1,9 +1,11 @@
 import { ScrollView, StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid, RefreshControl } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {Entypo} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { AuthContext } from '../../Context/AuthContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -14,6 +16,7 @@ const Reflecback = () => {
   const navigation = useNavigation();
 
   const [refreshing, setRefreshing] = React.useState(false);
+  const {userData} = useContext(AuthContext)
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -58,14 +61,41 @@ const Reflecback = () => {
 
 
   return (
-    <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+    <View>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
+      <View style={styles.header}>
+          <View style={styles.propicrow}>
+            <TouchableOpacity>
+          <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
+          </TouchableOpacity>
+          <Text style={styles.name}>Hi {userData?.user_info?.username}</Text>
+          </View>
+          <View style={styles.icons}>
+            
+          </View>
+      </View>
+      <TouchableOpacity>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
+                  <Text style={styles.buttonText}>Reflect Back</Text>
+                  
+      </LinearGradient>
+      </TouchableOpacity>
+    </LinearGradient>
+      
+    <ScrollView  refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+     
         <>   
+        
         {sessionNotes?.things_to_remember.length>0?
          sessionNotes?.things_to_remember.map((item,index)=>(     
           <ScrollView style={styles.container}>  
               <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Bold',fontSize:13}}>{item.date}</Text>
               <TouchableOpacity onPress={()=>{navigation.navigate('UserUpdateReflectback',{name:item.date,reflectBack:item})}}>
-                                  <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
+              <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:13}}>{item.title}</Text>
 
                 
               </TouchableOpacity>
@@ -75,6 +105,7 @@ const Reflecback = () => {
         </>
 
     </ScrollView>
+    </View>
   )
 }
 
@@ -196,5 +227,6 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.9,
       shadowRadius: 10,
       elevation: 10,
-    }
+    },
+   
   });

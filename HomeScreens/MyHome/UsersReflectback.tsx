@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View,Image, TouchableOpacity, Dimensions, ToastAndroid, FlatList, TextInput, RefreshControl } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
@@ -8,6 +8,7 @@ import { Avatar } from 'react-native-paper';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-virtualized-view'
+import { AuthContext } from '../../Context/AuthContext';
 
 
 
@@ -20,6 +21,8 @@ const UsersReflectBack = () => {
     const [search, setSearch] = useState('');
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
+    const {userData} = useContext(AuthContext)
+
 
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -110,6 +113,29 @@ const UsersReflectBack = () => {
     };
   return (
     <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
+      <View style={styles.header}>
+          <View style={styles.propicrow}>
+            <TouchableOpacity>
+          <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
+          </TouchableOpacity>
+          <Text style={styles.name}>Hi {userData?.user_info?.username}</Text>
+          </View>
+          <View style={styles.icons}>
+            
+          </View>
+      </View>
+      <TouchableOpacity>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
+                  <Text style={styles.buttonText}>UserReflect</Text>
+                  
+      </LinearGradient>
+      </TouchableOpacity>
+    </LinearGradient>
         <View>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>Users Reflect Back</Text>
          

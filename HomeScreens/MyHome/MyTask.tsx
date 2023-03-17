@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../../Constants/Apilink';
 import {Entypo} from '@expo/vector-icons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../Context/AuthContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -13,6 +14,7 @@ let token;
 const MyTask = () => {
   const [sessionNotes, setSessionNotes] = useState(null);
   const navigation = useNavigation();
+  const {userData} = React.useContext(AuthContext);
   
 
   const getNotesData = async()=>{
@@ -46,6 +48,29 @@ const MyTask = () => {
 
   return (
     <View>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
+      <View style={styles.header}>
+          <View style={styles.propicrow}>
+            <TouchableOpacity>
+          <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
+          </TouchableOpacity>
+          <Text style={styles.name}>Hi {userData?.user_info?.username}</Text>
+          </View>
+          <View style={styles.icons}>
+            
+          </View>
+      </View>
+      <TouchableOpacity>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
+                  <Text style={styles.buttonText}>My Tasks</Text>
+                  
+      </LinearGradient>
+      </TouchableOpacity>
+    </LinearGradient>
         <View>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:15}}>These are your task before next session.</Text>
           {sessionNotes?.notes.length>0?

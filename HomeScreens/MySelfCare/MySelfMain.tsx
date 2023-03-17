@@ -1,7 +1,8 @@
 import { StyleSheet,ScrollView, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../Context/AuthContext';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -9,8 +10,32 @@ const windowHeight = Dimensions.get('window').height;
 
 const MySelfMain = () => {
     const navigation = useNavigation();
+    const {userData} = useContext(AuthContext)
   return (
     <ScrollView style={{height:windowHeight/1.55}}>
+       <LinearGradient
+        // Button Linear Gradient
+        colors={['#6264AF','#6275CF','#6276EF','#6277FF','#6288EC','#6299EF']} style={styles.container}>
+      <View style={styles.header}>
+          <View style={styles.propicrow}>
+            <TouchableOpacity>
+          <Image source={require('../../assets/propic.jpg')} style={styles.profilePic} />
+          </TouchableOpacity>
+          <Text style={styles.name}>Hi {userData?.user_info?.username}</Text>
+          </View>
+          <View style={styles.icons}>
+            
+          </View>
+      </View>
+      <TouchableOpacity>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
+                  <Text style={styles.buttonText}>My Self Care</Text>
+                  
+      </LinearGradient>
+      </TouchableOpacity>
+    </LinearGradient>
           <Text style={{marginHorizontal:30,marginTop:10,marginBottom:5,fontFamily:'Poppins-Regular',fontSize:17}}>Programs</Text>
           <LinearGradient
             colors={['rgba(195, 195, 238, 0.76) @ 8.68%','rgba(177, 177, 236, 0.52) @ 38.89%','rgba(201, 201, 229, 0.32) @ 99.99%','rgba(255, 255, 255, 7) @ 100%']} style={styles.cardcontainer}>

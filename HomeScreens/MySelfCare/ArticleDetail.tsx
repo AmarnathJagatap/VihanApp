@@ -11,10 +11,7 @@ const ArticleDetail = ({route}) => {
     <View style={styles.container}>
       <Text style={{ textAlign:'center',fontSize: 15,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>Author:  {ArticleDetail.author}</Text>        
       <Text style={{ textAlign:'center', fontSize: 12,color:"rgba(0, 0, 0, 0.80)",fontFamily:'Poppins-Regular'}}>{ArticleDetail.date}</Text> 
-      <WebView
-            originWhitelist={['*']}
-            source={{ html: ArticleDetail.content }}
-      />
+      <WebView source={{ uri: 'https://vaymoli.blogspot.com/2022/03/katapayadi-system.html' }} />
     </View>
   )
 }

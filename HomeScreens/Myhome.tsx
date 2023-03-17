@@ -2,17 +2,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useContext, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Alert } from 'react-native';
 import { Entypo } from '@expo/vector-icons'; 
-import MyTask from './MyHome/MyTask';
-import Reflecback from './MyHome/ReflectBack';
+
 import MainHome from './MyHome/MainHome';
 import { AuthContext } from '../Context/AuthContext';
-import Programs from './MySelfCare/Programs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Apilink } from '../Constants/Apilink';
-import { removeToken } from '../Services/AsyncStorageService';
-import UserTasks from './MyHome/UsersTask';
-import UsersReflectBack from './MyHome/UsersReflectback';
-import MySelfMain from './MySelfCare/MySelfMain';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -61,7 +56,7 @@ const Myhome = ({navigation}) => {
             
           </View>
       </View>
-      <TouchableOpacity onPress={()=>{homeScreenItem==="Home"?setHomeScreenItem("My Self Care"):setHomeScreenItem(homeScreenItem)}}>
+      <TouchableOpacity onPress={()=>{navigation.navigate('MySelfCare')}}>
       <LinearGradient
         // Button Linear Gradient
         colors={['#FFFFFF','rgba(255, 255, 255, 8)','rgba(255, 255, 255, 5) @ 100%']} style={styles.button}>
@@ -70,12 +65,8 @@ const Myhome = ({navigation}) => {
       </LinearGradient>
       </TouchableOpacity>
     </LinearGradient>
-    {homeScreenItem==="Home"?<MainHome/>:<></>}
-    {homeScreenItem==="TASK"?<MyTask/>:<></>}
-    {homeScreenItem==="Users TASK"?<UserTasks/>:<></>}
-    {homeScreenItem==="Reflect Back"?<Reflecback/>:<></>}
-    {homeScreenItem==="Users Reflect Back"?<UsersReflectBack/>:<></>}
-    {homeScreenItem==="My Self Care"?<MySelfMain/>:<></>}
+   <MainHome/>
+    
     </View>
   );
 };

@@ -33,6 +33,11 @@ import UsersJournalDetailScreen from '../HomeScreens/MyJournal/UsersJournalDetai
 import UserMoodDetailScreen from '../HomeScreens/Triggers/UserMoodDetailScreen';
 import UserTriggerDetailScreen from '../HomeScreens/Triggers/UserTriggerDetailScreen';
 import ArticleDetail from '../HomeScreens/MySelfCare/ArticleDetail';
+import MyTask from '../HomeScreens/MyHome/MyTask';
+import Reflecback from '../HomeScreens/MyHome/ReflectBack';
+import MySelfMain from '../HomeScreens/MySelfCare/MySelfMain';
+import UsersReflectBack from '../HomeScreens/MyHome/UsersReflectback';
+import UserTasks from '../HomeScreens/MyHome/UsersTask';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -183,6 +188,32 @@ export default function HomeScreen({navigation}){
         component={CreateGroup}
         options={{headerShown: false}}   
       />  
+
+      <Stack.Screen
+        name="MyTask"
+        component={MyTask}
+        options={{headerShown: false}}   
+      /> 
+       <Stack.Screen
+        name="ReflectBack"
+        component={Reflecback}
+        options={{headerShown: false}}   
+      /> 
+       <Stack.Screen
+        name="UsersReflectBack"
+        component={UsersReflectBack}
+        options={{headerShown: false}}   
+      /> 
+       <Stack.Screen
+        name="UsersTasks"
+        component={UserTasks}
+        options={{headerShown: false}}   
+      /> 
+        <Stack.Screen
+        name="MySelfCare"
+        component={MySelfMain}
+        options={{headerShown: false}}   
+      />   
      
      <Stack.Screen
         name="UserTaskDetailScreen"
